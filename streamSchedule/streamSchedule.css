@@ -1,6 +1,6 @@
 html {
 	--calendarHeight: calc(92.5vh);
-	--calendarWidth: calc(72.5vw);
+	--calendarWidth: calc(68.5vw);
 	--pageBorderVertical: calc(2.5vh);
 	--pageBorderHorizontal: calc(2.5vw);
 	--borderWidth: 2px;
@@ -9,13 +9,22 @@ html {
 	--labelSize: calc(3vh);
 	--littleLabelSize: calc(2vh);
 	
-	--defaultColor: orange;
+	--textColor: #2d2d2d;
+	
+	--defaultEventColor: orange;
+	--backgroundColor: #bfbfbf;
+	--borderColor: #7f7f7f;
+	
+	--activeColor: white;
+	--activeHighlightColor: #2d2d2d;
+	
 	--numDropdown: 0;
 }
 
 body {
-	background: gray;
-	/*font-family: sans-serif;*/
+	background: var(--backgroundColor);
+	font-family: monospace;
+	color: var(--textColor);
 }
 
 /* calendar styles */
@@ -28,7 +37,7 @@ body {
 	top: var(--pageBorderVertical);
 	left: var(--pageBorderHorizontal);
 	
-	border: 2px solid white;
+	border: 2px solid var(--borderColor);
 	border-right: none;
 	
 	border-top-left-radius: 10px;
@@ -36,11 +45,11 @@ body {
 }
 
 .vertLine {
-	border-right: var(--borderWidth) solid white;
+	border-right: var(--borderWidth) solid var(--borderColor);
 }
 
 .horLine {
-	border-top: var(--borderWidth) solid white;
+	border-top: var(--borderWidth) solid var(--borderColor);
 }
 
 #calendar .vertLine {
@@ -94,11 +103,11 @@ body {
 	flex: 1;
 	height: calc((var(--calendarHeight) - 7vh) / 48);
 	
-	background: var(--defaultColor);
+	background: var(--defaultEventColor);
 }
 
 .calendarEvent.active, .calendarEvent:hover {
-	border: var(--borderWidth) solid white;
+	border: var(--borderWidth) solid var(--activeHighlightColor);
 }
 
 
@@ -108,7 +117,7 @@ body {
 #sidebar {
 	position: absolute;
 	height: var(--calendarHeight);
-	width: calc(22.5vw);
+	width: calc(100vw - (2 * var(--pageBorderHorizontal)) - var(--calendarWidth));
 	
 	top: var(--pageBorderVertical);
 	left: calc(var(--calendarWidth) + var(--pageBorderHorizontal));
@@ -116,7 +125,7 @@ body {
 	display: flex;
 	flex-direction: column;
 	
-	border: var(--borderWidth) solid white;
+	border: var(--borderWidth) solid var(--borderColor);
 	
 	border-top-right-radius: 10px;
 	border-bottom-right-radius: 10px;
@@ -136,19 +145,19 @@ body {
 }
 
 #sidebar > .dropdown:not(:last-child) {
-	border-bottom: var(--borderWidth) solid white;
+	border-bottom: var(--borderWidth) solid var(--borderColor);
 }
 
 #sidebar > .dropdown > .dropdownLabel:hover {
 	cursor: pointer;
-	color: white;
-	background: black;
+	color: var(--activeColor);
+	background: var(--activeHighlightColor);
 }
 
 #sidebar > .dropdown > .dropdownContent {
 	display: none;
 	
-	border-top: var(--borderWidth) solid white;
+	border-top: var(--borderWidth) solid var(--borderColor);
 	
 	height: calc(var(--calendarHeight) - (1.25 * var(--numDropdown) * (var(--labelSize))));
 	overflow-y: scroll;
@@ -168,7 +177,7 @@ input[type="color"] {
 	
 	padding: 0px;
 	
-	border: var(--borderWidth) solid white;
+	border: var(--borderWidth) solid var(--borderColor);
 }
 
 #sidebar > .dropdown > .streamTimes > .streamTime {
@@ -180,19 +189,19 @@ input[type="color"] {
 }
 
 #sidebar > .dropdown > .streamTimes > .streamTime:not(:last-child) {
-	border-bottom: var(--borderWidth) solid white;
+	border-bottom: var(--borderWidth) solid var(--borderColor);
 }
 
 .streamTime:hover {
 	cursor: pointer;
-	color: white;
-	background: black;
+	color: var(--activeColor);
+	background: var(--activeHighlightColor);
 }
 
 .streamTime.active {
 	cursor: pointer;
-	color: white;
-	background: black;
+	color: var(--activeColor);
+	background: var(--activeHighlightColor);
 }
 
 .streamTime > .streamDate {
@@ -220,8 +229,8 @@ input[type="color"] {
 }
 
 .streamerDiv:hover {
-	color: white;
-	background: black;
+	color: var(--activeColor);
+	background: var(--activeHighlightColor);
 }
 
 .streamerDiv input, .streamerDiv label {
@@ -260,7 +269,7 @@ input[type="color"] {
 }
 
 #addcustomevent form:not(:last-child) {
-	border-bottom: var(--borderWidth) solid white;
+	border-bottom: var(--borderWidth) solid var(--borderColor);
 }
 
 #addcustomeventform form > div > div, input, select {
@@ -273,7 +282,7 @@ input[type="color"] {
 }
 
 #settings > .dropdownContent > div:not(:last-child) {
-	border-bottom: var(--borderWidth) solid white;
+	border-bottom: var(--borderWidth) solid var(--borderColor);
 }
 
 #settings > .dropdownContent > div > div:first-child {
@@ -297,12 +306,12 @@ input[type="color"] {
 	padding: calc(var(--littleLabelSize) / 2);
 	margin: calc(var(--littleLabelSize) / 2);
 	
-	border: var(--borderWidth) solid white;
+	border: var(--borderWidth) solid var(--borderColor);
 	border-radius: 10px;
 }
 
 #settings .material-icons:hover {
 	cursor: pointer;
-	background: black;
-	color: white;
+	background: var(--activeHighlightColor);
+	color: var(--activeColor);
 }
