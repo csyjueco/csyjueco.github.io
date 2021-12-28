@@ -673,11 +673,11 @@ var addStreamForm = function () {
 		
 		var newStreamFormStreamerSelectOptions = document.querySelectorAll("#newStreamFormStreamerSelect > option");
 		
-		if (insertIndex == streamerDivs.length) {
+		if ((insertIndex + 1) == streamerDivs.length) {
 			document.querySelectorAll("#streamers > .dropdownContent")[0].append(streamerDiv);
 			document.querySelectorAll("#newStreamFormStreamerSelect")[0].append(newStreamFormStreamerSelectOption);
 		} else {
-			streamerDivs[insertIndex].before(streamerDiv);
+			streamerDivs[insertIndex + 1].before(streamerDiv);
 			newStreamFormStreamerSelectOptions[insertIndex].before(newStreamFormStreamerSelectOption);
 		}
 		
