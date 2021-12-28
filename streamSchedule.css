@@ -1,0 +1,308 @@
+html {
+	--calendarHeight: calc(92.5vh);
+	--calendarWidth: calc(72.5vw);
+	--pageBorderVertical: calc(2.5vh);
+	--pageBorderHorizontal: calc(2.5vw);
+	--borderWidth: 2px;
+	
+	--largeLabelSize: calc(4vh);
+	--labelSize: calc(3vh);
+	--littleLabelSize: calc(2vh);
+	
+	--defaultColor: orange;
+	--numDropdown: 0;
+}
+
+body {
+	background: gray;
+	/*font-family: sans-serif;*/
+}
+
+/* calendar styles */
+
+#calendar {
+	position: absolute;
+	height: var(--calendarHeight);
+	width: var(--calendarWidth);
+	
+	top: var(--pageBorderVertical);
+	left: var(--pageBorderHorizontal);
+	
+	border: 2px solid white;
+	border-right: none;
+	
+	border-top-left-radius: 10px;
+	border-bottom-left-radius: 10px;
+}
+
+.vertLine {
+	border-right: var(--borderWidth) solid white;
+}
+
+.horLine {
+	border-top: var(--borderWidth) solid white;
+}
+
+#calendar .vertLine {
+	display: inline-block;
+	height: 100%;
+	width: calc((var(--calendarWidth) / 8) - var(--borderWidth));
+}
+
+#calendar .horLine {
+	position: absolute;
+	
+	width: 100%;
+	opacity: 0.25;
+}
+
+.dateLabel {
+	text-align: center;
+	font-size: var(--largeLabelSize);
+	margin: calc(1.5vh) 0px;
+}
+
+#calendar .hourLabel {
+	position: absolute;
+	font-size: var(--littleLabelSize);
+	right: calc(var(--calendarWidth) + 0.3vw);
+}
+
+
+
+.timeIndicator {
+	position: absolute;
+	z-index: 2;
+	
+	width: calc((var(--calendarWidth) / 8) - var(--borderWidth));
+	
+	border: var(--borderWidth) solid red;
+	opacity: 0.5;
+}
+
+.calendarTime {
+	position: absolute;
+	
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	
+	width: calc((var(--calendarWidth) / 8) - var(--borderWidth));
+}
+
+.calendarEvent {
+	flex: 1;
+	height: calc((var(--calendarHeight) - 7vh) / 48);
+	
+	background: var(--defaultColor);
+}
+
+.calendarEvent.active, .calendarEvent:hover {
+	border: var(--borderWidth) solid white;
+}
+
+
+
+/* sidebar styles */
+
+#sidebar {
+	position: absolute;
+	height: var(--calendarHeight);
+	width: calc(22.5vw);
+	
+	top: var(--pageBorderVertical);
+	left: calc(var(--calendarWidth) + var(--pageBorderHorizontal));
+	
+	display: flex;
+	flex-direction: column;
+	
+	border: var(--borderWidth) solid white;
+	
+	border-top-right-radius: 10px;
+	border-bottom-right-radius: 10px;
+	
+	overflow: clip;
+}
+
+#sidebar div {
+  -webkit-user-select: none;  /* Chrome all / Safari all */
+  -moz-user-select: none;     /* Firefox all */
+  -ms-user-select: none;      /* IE 10+ */
+}
+
+#sidebar > .dropdown {
+	font-size: var(--labelSize);
+	text-align: center;
+}
+
+#sidebar > .dropdown:not(:last-child) {
+	border-bottom: var(--borderWidth) solid white;
+}
+
+#sidebar > .dropdown > .dropdownLabel:hover {
+	cursor: pointer;
+	color: white;
+	background: black;
+}
+
+#sidebar > .dropdown > .dropdownContent {
+	display: none;
+	
+	border-top: var(--borderWidth) solid white;
+	
+	height: calc(var(--calendarHeight) - (1.25 * var(--numDropdown) * (var(--labelSize))));
+	overflow-y: scroll;
+}
+
+#sidebar > .dropdown.expanded {
+	flex: 1;
+}
+
+#sidebar > .dropdown.expanded > .dropdownContent {
+	display: block;
+}
+
+input[type="color"] {
+	height: var(--largeLabelSize);
+	width: var(--largeLabelSize);
+	
+	padding: 0px;
+	
+	border: var(--borderWidth) solid white;
+}
+
+#sidebar > .dropdown > .streamTimes > .streamTime {
+	text-align: left;
+	display: flex;
+	flex-direction: row;
+	
+	font-size: var(--littleLabelSize);
+}
+
+#sidebar > .dropdown > .streamTimes > .streamTime:not(:last-child) {
+	border-bottom: var(--borderWidth) solid white;
+}
+
+.streamTime:hover {
+	cursor: pointer;
+	color: white;
+	background: black;
+}
+
+.streamTime.active {
+	cursor: pointer;
+	color: white;
+	background: black;
+}
+
+.streamTime > .streamDate {
+	text-align: center;
+	
+	margin: 10px;
+}
+
+.streamTime > .streamText {
+	margin: 10px;
+}
+
+.streamDate > .streamDay {
+	font-size: var(--labelSize);
+}
+
+.streamText > .streamTitle {
+	font-size: var(--labelSize);
+}
+
+
+.streamerDiv {
+	display: flex;
+	align-items: center;
+}
+
+.streamerDiv:hover {
+	color: white;
+	background: black;
+}
+
+.streamerDiv input, .streamerDiv label {
+	margin: 10px;
+}
+
+.streamerDiv input:hover, .streamerDiv label:hover {
+	cursor: pointer;
+}
+
+.streamerDiv > .streamerActive {
+	flex: 1;
+}
+
+.streamerActive {
+	display: flex;
+	align-items: center;
+	text-align: left;
+}
+
+.streamerActiveCheckbox {
+	height: var(--littleLabelSize);
+	width: var(--littleLabelSize);
+}
+
+#recentlylive > .dropdownContent > :not(.live) {
+	display: none !important;
+}
+
+#addcustomevent form {
+	font-size: var(--littleLabelSize);
+	padding-top: var(--largeLabelSize);	
+	padding-bottom: var(--largeLabelSize);	
+	
+	margin: 0px;
+}
+
+#addcustomevent form:not(:last-child) {
+	border-bottom: var(--borderWidth) solid white;
+}
+
+#addcustomeventform form > div > div, input, select {
+	margin: 5px;
+}
+
+#settings > .dropdownContent {
+	font-size: var(--littleLabelSize);
+	text-align: left;
+}
+
+#settings > .dropdownContent > div:not(:last-child) {
+	border-bottom: var(--borderWidth) solid white;
+}
+
+#settings > .dropdownContent > div > div:first-child {
+	font-size: var(--labelSize);
+}
+
+#settings > .dropdownContent > div {
+	padding-top: var(--largeLabelSize);	
+	padding-bottom: var(--largeLabelSize);
+	
+	margin-left: 10px;
+	margin-right: 10px;
+}
+
+#settings #newData {
+	display: none;
+}
+
+#settings .material-icons {
+	font-size: var(--largeLabelSize);
+	padding: calc(var(--littleLabelSize) / 2);
+	margin: calc(var(--littleLabelSize) / 2);
+	
+	border: var(--borderWidth) solid white;
+	border-radius: 10px;
+}
+
+#settings .material-icons:hover {
+	cursor: pointer;
+	background: black;
+	color: white;
+}
