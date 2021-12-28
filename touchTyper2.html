@@ -1,0 +1,56 @@
+<html>
+<head>
+<meta charset=utf-8>
+
+<link href="touchTyper2.css" rel="stylesheet">
+
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+<body>
+
+<div id="header"></div>
+
+<div id="keyboard"></div>
+
+<div id="typingArea">
+	<div>
+		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+	</div>
+	<div>
+		<span id="typedText"><span id="cursor"></span><span id="currWord"></span></span>
+	</div>
+</div>
+
+
+<div id="actionButtons">
+	<div id="reset" class="actionButton" title="Reset">
+		<span class="material-icons">restart_alt</span>
+	</div>
+	<div id="toggleKeyboard" class="actionButton" title="Show/hide keyboard">
+		<span class="material-icons">keyboard</span>
+	</div>
+	<div id="txtFile" class="actionButton" title="Upload a text file to type">
+		<label id="newTextLabel">
+			<span class="material-icons">upload_file</span>
+			<input type="file" id="newTextInput" name="newText" accept=".txt"></input>
+		</label>
+	</div>
+	<div id="customColors" class="actionButton" title="Customize theme">
+		<span class="material-icons">palette</span>
+	</div>
+</div>
+
+<div id="statsContainer">
+	<div id="stats">
+		100.0% Accuracy - 0 Characters - 0 Misclicks
+	</div>
+	<div id="statBar">
+		<div></div>
+	</div>	
+</div>
+
+
+<script type="text/javascript" src="touchTyper2.js"></script>
+
+</body>
+</html>
