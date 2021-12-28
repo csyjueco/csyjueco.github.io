@@ -1,10 +1,3 @@
-/*
-TODOS
-- Settings
-	- other color theme changes
-	- changing week date (new events and new streamers need to be kept it)
-*/
-
 // rearranging array variables by order
 var findBSTIndex = function (orderedArray, entry, sortIndex, start, end) {
 	if (orderedArray.length == 0) {
@@ -260,6 +253,9 @@ var createLiveStreamDiv = function (i) {
 	
 	
 	
+	var streamStreamer = document.createElement("div");
+	streamStreamer.innerText = "— " + schedule[i][0] + " —";
+	
 	var streamText = document.createElement("div");
 	streamText.classList.add("streamText");
 	
@@ -271,6 +267,7 @@ var createLiveStreamDiv = function (i) {
 	streamDescription.classList.add("streamDescription");
 	streamDescription.innerText = schedule[i][3];
 	
+	streamText.append(streamStreamer);
 	streamText.append(streamTitle);
 	if (schedule[i][3]!="") {streamText.append(streamDescription);};
 	
@@ -401,6 +398,73 @@ var createStreamerDiv = function (streamerSpecificStuff) {
 	return streamerDiv;
 }
 
+var toggleAllStreamersDiv = function () {
+	var streamer = "allstreamers";
+	
+	var streamerDiv = document.createElement("div");
+	streamerDiv.id = "streamerDiv-" + streamer;
+	streamerDiv.classList.add("streamerDiv");
+	streamerDiv.classList.add(streamer);
+	
+	var streamerActive = document.createElement("div");
+	streamerActive.id = streamer + "Active";
+	streamerActive.classList.add("streamerActive");
+	
+	var streamerActiveCheckbox = document.createElement("input");
+	streamerActiveCheckbox.type = "checkbox";
+	streamerActiveCheckbox.id = streamer + "ActiveCheckbox";
+	streamerActiveCheckbox.name = streamer + "ActiveCheckbox";
+	streamerActiveCheckbox.checked = true;
+	streamerActiveCheckbox.classList.add("streamerActiveCheckbox");
+	
+	
+	streamerActiveCheckbox.addEventListener("input", function (event) {
+		// removing/resetting display styling for hidden calendar events
+		var streamer = event.target.id.replace('ActiveCheckbox', '');
+		
+		
+		var allStreamerDivs = document.querySelectorAll("#streamers > .dropdownContent > :not(.allstreamers) > div > .streamerActiveCheckbox");
+		
+		for (var i = 0; i < allStreamerDivs.length; i++) {
+			allStreamerDivs[i].checked = event.target.checked;
+			// allStreamerDivs[i].checked = !allStreamerDivs[i].checked;
+			allStreamerDivs[i].dispatchEvent(new Event("input", {"bubbles": true}));
+		}
+	});
+	
+	var streamerActiveLabel = document.createElement("label");
+	streamerActiveLabel.id = streamer + "ActiveLabel";
+	streamerActiveLabel.setAttribute("for", streamer + "ActiveCheckbox");
+	streamerActiveLabel.innerText = "Toggle all";
+	streamerActiveLabel.classList.add("streamerActiveLabel");
+	
+	
+	streamerActive.append(streamerActiveCheckbox);
+	streamerActive.append(streamerActiveLabel);
+	
+	streamerDiv.append(streamerActive);
+	
+	
+	// light up corresponding calendar events when mousing over the streamer in the sidebar
+	streamerDiv.addEventListener('mouseenter', function () {
+		var streamer = this.id.slice(this.id.search("-") + 1);
+		var streamTimeQuery = document.querySelectorAll(".calendarEvent." + streamer);
+		for (var i = 0; i < streamTimeQuery.length; i++) {
+			streamTimeQuery[i].classList.add("active");
+		}
+	});
+	
+	streamerDiv.addEventListener('mouseleave', function () {
+		var streamer = this.id.slice(this.id.search("-") + 1);
+		var streamTimeQuery = document.querySelectorAll(".calendarEvent." + streamer);
+		for (var i = 0; i < streamTimeQuery.length; i++) {
+			streamTimeQuery[i].classList.remove("active");
+		}
+	});
+	
+	return streamerDiv;
+}
+
 
 
 // streams dropdown
@@ -426,6 +490,9 @@ var createStreamDiv = function (i) {
 	
 	
 	
+	var streamStreamer = document.createElement("div");
+	streamStreamer.innerText = "— " + schedule[i][0] + " —";
+	
 	var streamText = document.createElement("div");
 	streamText.classList.add("streamText");
 	
@@ -437,6 +504,7 @@ var createStreamDiv = function (i) {
 	streamDescription.classList.add("streamDescription");
 	streamDescription.innerText = schedule[i][3];
 	
+	streamText.append(streamStreamer);
 	streamText.append(streamTitle);
 	if (schedule[i][3]!="") {streamText.append(streamDescription);};
 	
@@ -763,6 +831,7 @@ var resetStreamers = function () {
 	// resetting streamers dropdown
 	document.querySelectorAll("#streamers > .dropdownContent")[0].innerHTML = "";
 	
+	document.querySelectorAll("#streamers > .dropdownContent")[0].append(toggleAllStreamersDiv());
 	for (var i = 0; i < streamerSpecificStuff.length; i++) {
 		document.querySelectorAll("#streamers > .dropdownContent")[0].append(createStreamerDiv(streamerSpecificStuff[i]));
 	}
@@ -792,18 +861,6 @@ var addSettings = function () {
 	// adjust start date of calendar
 	document.querySelectorAll(".dropdown#settings > .dropdownContent")[0].innerHTML = `
 	<div>
-		<div>Download/Upload: </div>
-		<div>
-			<span class="material-icons" id="downloadData" title="Download a schedule/streamer file">file_download</span>
-			<span id="jsFile" title="Upload a schedule/streamer file">
-				<label id="newDataLabel">
-					<span class="material-icons">upload_file</span>
-					<input type="file" id="newData" name="newData" accept=".js"></input>
-				</label>
-			</span>
-		</div>
-	</div>
-	<div>
 		<div>Calendar: </div>
 		<div id="newFirstDate">
 			<span>First calendar day</span>
@@ -821,6 +878,18 @@ var addSettings = function () {
 			<span>Include streams that will start in </span>
 			<input type="number" name="newFutureLimitNumber" id="newFutureLimitNumber" value = "` + (futureLimit / (3600 * 1000)) + `" min="0" size="4" step="0.5">
 			<span> hours</span>
+		</div>
+	</div>
+	<div>
+		<div>Download/Upload: </div>
+		<div>
+			<span class="material-icons" id="downloadData" title="Download a schedule/streamer file">file_download</span>
+			<span id="jsFile" title="Upload a schedule/streamer file">
+				<label id="newDataLabel">
+					<span class="material-icons">upload_file</span>
+					<input type="file" id="newData" name="newData" accept=".js"></input>
+				</label>
+			</span>
 		</div>
 	</div>
 	`;
@@ -916,6 +985,7 @@ for (var i = 0; i < schedule.length; i++) {
 	document.querySelectorAll("#recentlylive > .dropdownContent")[0].append(createLiveStreamDiv(i));
 }
 
+document.querySelectorAll("#streamers > .dropdownContent")[0].append(toggleAllStreamersDiv());
 for (var i = 0; i < streamerSpecificStuff.length; i++) {
 	document.querySelectorAll("#streamers > .dropdownContent")[0].append(createStreamerDiv(streamerSpecificStuff[i]));
 }
@@ -936,4 +1006,56 @@ document.querySelectorAll("#calendar")[0].append(timeIndicator);
 updateTime();
 window.setInterval(updateTime, 300000);
 
-document.querySelectorAll(".dropdown#settings")[0].classList.add("expanded");
+document.querySelectorAll(".dropdown#streamers")[0].classList.add("expanded");
+
+
+
+// check for params for preset streamers/schedules
+var checkParams = function () {
+	var searchParams = new URLSearchParams(new URL(window.location.href).search);
+	
+	if (searchParams.has("group")) {
+		var addScripts = false;
+		var streamersScript = "";
+		var scheduleScript = "";
+		
+		if (searchParams.get("group").toLowerCase() == "niji-en") {
+			streamersScript = "streamers-NIJI-EN.js";
+			scheduleScript = "schedule-NIJI-EN.js";
+			
+			addScripts = true;
+		} else if (searchParams.get("group").toLowerCase() == "personal") {
+			streamersScript = "streamers-personal.js";
+			scheduleScript = "schedule-personal.js";
+			
+			addScripts = true;
+		}
+		
+		if (addScripts) {
+			var newScript1 = document.createElement("script");
+			newScript1.setAttribute('type', 'text/javascript');
+			newScript1.setAttribute('src', streamersScript);
+			
+			var newScript2 = document.createElement("script");
+			newScript2.setAttribute('type', 'text/javascript');
+			newScript2.setAttribute('src', scheduleScript);
+			
+			var newScript3 = document.createElement("script");
+			newScript3.setAttribute('type', 'text/javascript');
+			newScript3.innerHTML = "resetAll();";
+			
+			
+			newScript1.onload = function () {
+				document.querySelectorAll("head")[0].append(newScript2);
+			}
+			
+			newScript2.onload = function () {
+				document.querySelectorAll("head")[0].append(newScript3);
+			}
+			
+			document.querySelectorAll("head")[0].append(newScript1);
+		}
+	}
+}
+
+checkParams();
