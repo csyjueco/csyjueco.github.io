@@ -1,3 +1,24 @@
+// changing fontsizes based on screensize
+document.documentElement.style.setProperty("--largeLabelSize", Math.min(window.innerHeight * 0.04, window.innerWidth * 0.04) + "px");
+
+if (((0.315 * window.innerWidth) - (1.5 * Math.min(window.innerHeight * 0.04, window.innerWidth * 0.04))) < 225) {
+	document.documentElement.style.setProperty("--sidebarWidth", "225px)");
+	document.documentElement.style.setProperty("--calendarWidth", "calc(100vw - (1.5 * var(--pageBorderHorizontal)) - 225px)");
+}
+
+window.onresize = function () {
+	document.documentElement.style.setProperty("--largeLabelSize", Math.min(window.innerHeight * 0.04, window.innerWidth * 0.04) + "px");
+	
+	if (((0.315 * window.innerWidth) - (1.5 * Math.min(window.innerHeight * 0.04, window.innerWidth * 0.04))) < 225) {
+		document.documentElement.style.setProperty("--sidebarWidth", "225px");
+		document.documentElement.style.setProperty("--calendarWidth", "calc(100vw - (1.5 * var(--pageBorderHorizontal)) - 225px)");
+	} else {
+		document.documentElement.style.removeProperty("--sidebarWidth");
+		document.documentElement.style.removeProperty("--calendarWidth");
+	}
+}
+
+
 // rearranging array variables by order
 var findBSTIndex = function (orderedArray, entry, sortIndex, start, end) {
 	if (orderedArray.length == 0) {
@@ -79,14 +100,6 @@ var setCalendar = function () {
 			horLine.style.top = "calc(7vh + (" + i + " * ((var(--calendarHeight) - 7vh) / 48)))";
 			
 			document.querySelectorAll("#calendarHorLines")[0].append(horLine);
-		}
-		
-		for (var j = 0; j < 8; j++) {
-			var timeDiv = document.createElement("div");
-			timeDiv.classList.add("timeDiv");
-			timeDiv.style.height = "calc((var(--calendarHeight) - 7vh) / 48)";
-			
-			document.querySelectorAll("#calendar > .vertLine")[j].append(timeDiv);
 		}
 	};
 };

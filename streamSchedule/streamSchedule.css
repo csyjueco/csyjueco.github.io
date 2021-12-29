@@ -1,13 +1,17 @@
 html {
+	/*--largeLabelSize: calc(4vh);*/
+	--labelSize: calc(var(--largeLabelSize) * 0.75);
+	--littleLabelSize: calc(var(--largeLabelSize) * 0.5);
+	
 	--calendarHeight: calc(92.5vh);
 	--calendarWidth: calc(68.5vw);
-	--pageBorderVertical: calc(2.5vh);
-	--pageBorderHorizontal: calc(2.5vw);
-	--borderWidth: 2px;
 	
-	--largeLabelSize: calc(4vh);
-	--labelSize: calc(3vh);
-	--littleLabelSize: calc(2vh);
+	--sidebarHeight: var(--calendarHeight);
+	--sidebarWidth: calc(100vw - (1.5 * var(--pageBorderHorizontal)) - var(--calendarWidth));
+	
+	--pageBorderVertical: calc(2.5vh);
+	--pageBorderHorizontal: var(--largeLabelSize);
+	--borderWidth: 2px;
 	
 	--textColor: #2d2d2d;
 	
@@ -37,7 +41,7 @@ body {
 	top: var(--pageBorderVertical);
 	left: var(--pageBorderHorizontal);
 	
-	border: 2px solid var(--borderColor);
+	border: var(--borderWidth) solid var(--borderColor);
 	border-right: none;
 	
 	border-top-left-radius: 10px;
@@ -58,6 +62,10 @@ body {
 	width: calc((var(--calendarWidth) / 8) - var(--borderWidth));
 }
 
+#calendar .vertLine:nth-of-type(8) {
+	border-right: none;
+}
+
 #calendar .horLine {
 	position: absolute;
 	
@@ -68,13 +76,13 @@ body {
 .dateLabel {
 	text-align: center;
 	font-size: var(--largeLabelSize);
-	margin: calc(1.5vh) 0px;
+	margin: calc(var(--littleLabelSize) / 2) 0px;
 }
 
 #calendar .hourLabel {
 	position: absolute;
 	font-size: var(--littleLabelSize);
-	right: calc(var(--calendarWidth) + 0.3vw);
+	right: calc(var(--calendarWidth) + (var(--littleLabelSize) * 0.5));
 }
 
 
@@ -116,8 +124,8 @@ body {
 
 #sidebar {
 	position: absolute;
-	height: var(--calendarHeight);
-	width: calc(100vw - (2 * var(--pageBorderHorizontal)) - var(--calendarWidth));
+	height: var(--sidebarHeight);
+	width: var(--sidebarWidth);
 	
 	top: var(--pageBorderVertical);
 	left: calc(var(--calendarWidth) + var(--pageBorderHorizontal));
@@ -127,8 +135,10 @@ body {
 	
 	border: var(--borderWidth) solid var(--borderColor);
 	
-	border-top-right-radius: 10px;
-	border-bottom-right-radius: 10px;
+	border-top-right-radius: calc(var(--littleLabelSize) / 2);
+	border-bottom-right-radius: calc(var(--littleLabelSize) / 2);
+	
+	margin-right: calc(var(--pageBorderHorizontal) / 2);
 	
 	overflow: clip;
 }
@@ -148,6 +158,11 @@ body {
 	border-bottom: var(--borderWidth) solid var(--borderColor);
 }
 
+#sidebar > .dropdown > .dropdownLabel {
+	height: var(--labelSize);
+	overflow-y: clip;
+}
+
 #sidebar > .dropdown > .dropdownLabel:hover {
 	cursor: pointer;
 	color: var(--activeColor);
@@ -159,8 +174,9 @@ body {
 	
 	border-top: var(--borderWidth) solid var(--borderColor);
 	
-	height: calc(var(--calendarHeight) - (1.25 * var(--numDropdown) * (var(--labelSize))));
+	height: calc(var(--calendarHeight) - (var(--numDropdown) * (var(--labelSize) + var(--borderWidth))));
 	overflow-y: scroll;
+	overflow-x: clip;
 }
 
 #sidebar > .dropdown.expanded {
@@ -207,11 +223,11 @@ input[type="color"] {
 .streamTime > .streamDate {
 	text-align: center;
 	
-	margin: 10px;
+	margin: calc(var(--littleLabelSize) / 2);
 }
 
 .streamTime > .streamText {
-	margin: 10px;
+	margin: calc(var(--littleLabelSize) / 2);
 }
 
 .streamDate > .streamDay {
@@ -234,7 +250,7 @@ input[type="color"] {
 }
 
 .streamerDiv input, .streamerDiv label {
-	margin: 10px;
+	margin: calc(var(--littleLabelSize) / 2);
 }
 
 .streamerDiv input:hover, .streamerDiv label:hover {
@@ -273,7 +289,7 @@ input[type="color"] {
 }
 
 #addcustomeventform form > div > div, input, select {
-	margin: 5px;
+	margin: calc(var(--littleLabelSize) / 2);
 }
 
 #settings > .dropdownContent {
