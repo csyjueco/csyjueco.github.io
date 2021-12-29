@@ -1,17 +1,23 @@
 // changing fontsizes based on screensize
-document.documentElement.style.setProperty("--largeLabelSize", Math.min(window.innerHeight * 0.04, window.innerWidth * 0.04) + "px");
+var screenHeight = Math.min(window.innerHeight, window.screen.height);
+var screenWidth = Math.min(window.innerWidth, window.screen.width);
 
-if (((0.315 * window.innerWidth) - (1.5 * Math.min(window.innerHeight * 0.04, window.innerWidth * 0.04))) < 225) {
-	document.documentElement.style.setProperty("--sidebarWidth", "225px)");
-	document.documentElement.style.setProperty("--calendarWidth", "calc(100vw - (1.5 * var(--pageBorderHorizontal)) - 225px)");
+document.documentElement.style.setProperty("--largeLabelSize", Math.min(screenHeight * 0.04, screenWidth * 0.04) + "px");
+
+if (((0.315 * screenWidth) - (1.5 * Math.min(screenHeight * 0.04, screenWidth * 0.04))) < 200) {
+	document.documentElement.style.setProperty("--sidebarWidth", "200px)");
+	document.documentElement.style.setProperty("--calendarWidth", "calc(100vw - (1.5 * var(--pageBorderHorizontal)) - 200px)");
 }
 
 window.onresize = function () {
-	document.documentElement.style.setProperty("--largeLabelSize", Math.min(window.innerHeight * 0.04, window.innerWidth * 0.04) + "px");
+	screenHeight = Math.min(window.innerHeight, window.screen.height);
+	screenWidth = Math.min(window.innerWidth, window.screen.width);
+
+	document.documentElement.style.setProperty("--largeLabelSize", Math.min(screenHeight * 0.04, screenWidth * 0.04) + "px");
 	
-	if (((0.315 * window.innerWidth) - (1.5 * Math.min(window.innerHeight * 0.04, window.innerWidth * 0.04))) < 225) {
-		document.documentElement.style.setProperty("--sidebarWidth", "225px");
-		document.documentElement.style.setProperty("--calendarWidth", "calc(100vw - (1.5 * var(--pageBorderHorizontal)) - 225px)");
+	if (((0.315 * screenWidth) - (1.5 * Math.min(screenHeight * 0.04, screenWidth * 0.04))) < 200) {
+		document.documentElement.style.setProperty("--sidebarWidth", "200px");
+		document.documentElement.style.setProperty("--calendarWidth", "calc(100vw - (1.5 * var(--pageBorderHorizontal)) - 200px)");
 	} else {
 		document.documentElement.style.removeProperty("--sidebarWidth");
 		document.documentElement.style.removeProperty("--calendarWidth");
