@@ -24,8 +24,6 @@ window.onresize = function () {
 	}
 }
 
-if ()
-
 
 // rearranging array variables by order
 var findBSTIndex = function (orderedArray, entry, sortIndex, start, end) {
