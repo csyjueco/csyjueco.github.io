@@ -1,6 +1,6 @@
 // changing fontsizes based on screensize
-var screenHeight = Math.min(window.innerHeight, (ionic.Platform.isIOS()) ? window.screen.height : window.innerHeight * window.devicePixelRatio);
-var screenWidth = Math.min(window.innerWidth, (ionic.Platform.isIOS()) ? window.screen.width : window.innerWidth * window.devicePixelRatio);
+var screenHeight = Math.min(window.innerHeight, window.screen.height, window.innerHeight * window.devicePixelRatio);
+var screenWidth = Math.min(window.innerWidth, window.screen.width , window.innerWidth * window.devicePixelRatio);
 
 document.documentElement.style.setProperty("--largeLabelSize", Math.min(screenHeight * 0.04, screenWidth * 0.04) + "px");
 
@@ -10,8 +10,8 @@ if (((0.315 * screenWidth) - (1.5 * Math.min(screenHeight * 0.04, screenWidth * 
 }
 
 window.onresize = function () {
-	screenHeight = Math.min(window.innerHeight, (ionic.Platform.isIOS()) ? window.screen.height : window.innerHeight * window.devicePixelRatio);
-	screenWidth = Math.min(window.innerWidth, (ionic.Platform.isIOS()) ? window.screen.width : window.innerWidth * window.devicePixelRatio);
+	screenHeight = Math.min(window.innerHeight, window.screen.height, window.innerHeight * window.devicePixelRatio);
+	screenWidth = Math.min(window.innerWidth, window.screen.width , window.innerWidth * window.devicePixelRatio);
 
 	document.documentElement.style.setProperty("--largeLabelSize", Math.min(screenHeight * 0.04, screenWidth * 0.04) + "px");
 	
