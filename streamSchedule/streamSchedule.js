@@ -1006,7 +1006,7 @@ document.querySelectorAll("#calendar")[0].append(timeIndicator);
 updateTime();
 window.setInterval(updateTime, 300000);
 
-document.querySelectorAll(".dropdown#streamers")[0].classList.add("expanded");
+document.querySelectorAll(".dropdown#recentlylive")[0].classList.add("expanded");
 
 
 
