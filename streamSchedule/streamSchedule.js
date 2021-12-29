@@ -6,6 +6,7 @@ document.documentElement.style.setProperty("--largeLabelSize", Math.min(screenHe
 
 if (((0.315 * screenWidth) - (1.5 * Math.min(screenHeight * 0.05, screenWidth * 0.05))) < 250) {
 	document.documentElement.style.setProperty("--calendarWidth", "calc(50vw)");
+	document.documentElement.style.setProperty("--calendarHeight", "calc(1.25 * var(--calendarWidth))");
 }
 
 window.onresize = function () {
@@ -16,8 +17,10 @@ window.onresize = function () {
 	
 	if (((0.315 * screenWidth) - (1.5 * Math.min(screenHeight * 0.05, screenWidth * 0.05))) < 250) {
 	document.documentElement.style.setProperty("--calendarWidth", "calc(50vw)");
+	document.documentElement.style.setProperty("--calendarHeight", "calc(1.25 * var(--calendarWidth))");
 	} else {
 		document.documentElement.style.removeProperty("--calendarWidth");
+		document.documentElement.style.removeProperty("--calendarHeight");
 	}
 }
 
