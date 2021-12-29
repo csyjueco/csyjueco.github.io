@@ -9,8 +9,8 @@ html {
 	--sidebarHeight: var(--calendarHeight);
 	--sidebarWidth: calc(100vw - (1.5 * var(--pageBorderHorizontal)) - var(--calendarWidth));
 	
-	--pageBorderVertical: calc(2.5vh);
-	--pageBorderHorizontal: var(--largeLabelSize);
+	--pageBorderVertical: calc(3.75vh);
+	--pageBorderHorizontal: calc(1.5 * var(--largeLabelSize));
 	--borderWidth: 2px;
 	
 	--textColor: #2d2d2d;
