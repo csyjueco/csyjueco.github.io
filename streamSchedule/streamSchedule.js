@@ -1,28 +1,30 @@
 // changing fontsizes based on screensize
-var screenHeight = Math.min(window.innerHeight, window.screen.height);
-var screenWidth = Math.min(window.innerWidth, window.screen.width);
+var screenHeight = Math.min(window.innerHeight, window.screen.height, window.outerHeight);
+var screenWidth = Math.min(window.innerWidth, window.screen.width, window.outerWidth);
 
 document.documentElement.style.setProperty("--largeLabelSize", Math.min(screenHeight * 0.04, screenWidth * 0.04) + "px");
 
-if (((0.315 * screenWidth) - (1.5 * Math.min(screenHeight * 0.04, screenWidth * 0.04))) < 200) {
-	document.documentElement.style.setProperty("--sidebarWidth", "200px)");
-	document.documentElement.style.setProperty("--calendarWidth", "calc(100vw - (1.5 * var(--pageBorderHorizontal)) - 200px)");
+if (((0.315 * screenWidth) - (1.5 * Math.min(screenHeight * 0.04, screenWidth * 0.04))) < 250) {
+	document.documentElement.style.setProperty("--sidebarWidth", "250px");
+	document.documentElement.style.setProperty("--calendarWidth", "calc(100vw - (1.5 * var(--pageBorderHorizontal)) - 250px)");
 }
 
 window.onresize = function () {
-	screenHeight = Math.min(window.innerHeight, window.screen.height);
-	screenWidth = Math.min(window.innerWidth, window.screen.width);
+	screenHeight = Math.min(window.innerHeight, window.screen.height, window.outerHeight);
+	screenWidth = Math.min(window.innerWidth, window.screen.width, window.outerWidth);
 
 	document.documentElement.style.setProperty("--largeLabelSize", Math.min(screenHeight * 0.04, screenWidth * 0.04) + "px");
 	
-	if (((0.315 * screenWidth) - (1.5 * Math.min(screenHeight * 0.04, screenWidth * 0.04))) < 200) {
-		document.documentElement.style.setProperty("--sidebarWidth", "200px");
-		document.documentElement.style.setProperty("--calendarWidth", "calc(100vw - (1.5 * var(--pageBorderHorizontal)) - 200px)");
+	if (((0.315 * screenWidth) - (1.5 * Math.min(screenHeight * 0.04, screenWidth * 0.04))) < 250) {
+		document.documentElement.style.setProperty("--sidebarWidth", "250px");
+		document.documentElement.style.setProperty("--calendarWidth", "calc(100vw - (1.5 * var(--pageBorderHorizontal)) - 250px)");
 	} else {
 		document.documentElement.style.removeProperty("--sidebarWidth");
 		document.documentElement.style.removeProperty("--calendarWidth");
 	}
 }
+
+if ()
 
 
 // rearranging array variables by order
