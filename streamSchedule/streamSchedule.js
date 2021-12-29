@@ -2,9 +2,9 @@
 var screenHeight = Math.min(window.innerHeight, window.screen.height, window.innerHeight * window.devicePixelRatio);
 var screenWidth = Math.min(window.innerWidth, window.screen.width, window.innerWidth * window.devicePixelRatio);
 
-document.documentElement.style.setProperty("--largeLabelSize", Math.min(screenHeight * 0.04, screenWidth * 0.04) + "px");
+document.documentElement.style.setProperty("--largeLabelSize", Math.min(screenHeight * 0.05, screenWidth * 0.05, 25) + "px");
 
-if (((0.315 * screenWidth) - (1.5 * Math.min(screenHeight * 0.04, screenWidth * 0.04))) < 250) {
+if (((0.315 * screenWidth) - (1.5 * Math.min(screenHeight * 0.05, screenWidth * 0.05))) < 250) {
 	document.documentElement.style.setProperty("--calendarWidth", "calc(50vw)");
 }
 
@@ -12,9 +12,9 @@ window.onresize = function () {
 	screenHeight = Math.min(window.innerHeight, window.screen.height, window.innerHeight * window.devicePixelRatio);
 	screenWidth = Math.min(window.innerWidth, window.screen.width , window.innerWidth * window.devicePixelRatio);
 
-	document.documentElement.style.setProperty("--largeLabelSize", Math.min(screenHeight * 0.04, screenWidth * 0.04) + "px");
+	document.documentElement.style.setProperty("--largeLabelSize", Math.min(screenHeight * 0.05, screenWidth * 0.05, 25) + "px");
 	
-	if (((0.315 * screenWidth) - (1.5 * Math.min(screenHeight * 0.04, screenWidth * 0.04))) < 250) {
+	if (((0.315 * screenWidth) - (1.5 * Math.min(screenHeight * 0.05, screenWidth * 0.05))) < 250) {
 	document.documentElement.style.setProperty("--calendarWidth", "calc(50vw)");
 	} else {
 		document.documentElement.style.removeProperty("--calendarWidth");
@@ -270,7 +270,7 @@ var createLiveStreamDiv = function (i) {
 	
 	
 	var streamStreamer = document.createElement("div");
-	streamStreamer.innerText = "— " + schedule[i][0] + " —";
+	streamStreamer.innerText = schedule[i][0];
 	
 	var streamText = document.createElement("div");
 	streamText.classList.add("streamText");
@@ -507,7 +507,7 @@ var createStreamDiv = function (i) {
 	
 	
 	var streamStreamer = document.createElement("div");
-	streamStreamer.innerText = "— " + schedule[i][0] + " —";
+	streamStreamer.innerText = schedule[i][0];
 	
 	var streamText = document.createElement("div");
 	streamText.classList.add("streamText");

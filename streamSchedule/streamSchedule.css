@@ -234,6 +234,10 @@ input[type="color"] {
 	font-size: var(--labelSize);
 }
 
+.streamText > div:nth-of-type(1) {
+	border-bottom: calc(var(--borderWidth) / 2) solid var(--borderColor);;
+}
+
 .streamText > .streamTitle {
 	font-size: var(--labelSize);
 }
