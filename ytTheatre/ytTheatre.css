@@ -4,6 +4,7 @@ html {
 
 body {
 	margin: 0px;
+	background: black;
 }
 
 #ytChat {
@@ -21,7 +22,7 @@ body {
 	left: 0px;
 	
 	height: 100%;
-	width: calc(99vw - var(--ytChatWidth));
+	width: calc(99.5vw - var(--ytChatWidth));
 	
-	border: 0px;
+	border-right: calc(0.6vw) solid black;
 }
