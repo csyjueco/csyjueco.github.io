@@ -1,0 +1,23 @@
+html {
+	--ytChatWidth: 350px;
+}
+
+#ytChat {
+	position: absolute;
+	right: 0px;
+	
+	height: 100%;
+	width: var(--ytChatWidth);
+	
+	border: 0px;
+}
+
+#ytVideo {
+	position: absolute;
+	left: 0px;
+	
+	height: 100%;
+	width: calc(100vw - var(--ytChatWidth));
+	
+	border: 0px;
+}
