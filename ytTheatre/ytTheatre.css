@@ -2,6 +2,10 @@ html {
 	--ytChatWidth: 350px;
 }
 
+body {
+	margin: 0px;
+}
+
 #ytChat {
 	position: absolute;
 	right: 0px;
@@ -17,7 +21,7 @@ html {
 	left: 0px;
 	
 	height: 100%;
-	width: calc(100vw - var(--ytChatWidth));
+	width: calc(99vw - var(--ytChatWidth));
 	
 	border: 0px;
 }
