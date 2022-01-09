@@ -28,6 +28,7 @@ chatframeStyle.innerHTML = `
 #movie_player .html5-video-container video {
 	height: calc(100vh) !important;
 	width: 100% !important;
+	background: color;
 }
 
 #movie_player .ytp-chrome-bottom {
