@@ -1,8 +1,7 @@
 var oldschedule = [
-[`Reiny`, new Date(`Mon Jan 24 2022 16:00:00 GMT-0500 (Eastern Standard Time)`), `Needy Streamer Overload!`, ``],
-[`Reiny`, new Date(`Wed Jan 26 2022 15:30:00 GMT-0500 (Eastern Standard Time)`), `Big Among Us Collab!`, ``],
-[`Reiny`, new Date(`Thu Jan 27 2022 15:00:00 GMT-0500 (Eastern Standard Time)`), `Biped with Reina Sun!`, ``],
-[`Reiny`, new Date(`Fri Jan 28 2022 16:00:00 GMT-0500 (Eastern Standard Time)`), `Rimworld with Lumi Kaneko!`, ``],
-[`Reiny`, new Date(`Sat Jan 29 2022 16:00:00 GMT-0500 (Eastern Standard Time)`), `ASMR Karaoke!`, ``],
-[`Reiny`, new Date(`Sun Jan 30 2022 07:00:00 GMT-0500 (Eastern Standard Time)`), `Outlast with heart rate monitor!`, ``]
+[`Sara Nagare`, new Date(`Sun Jan 30 2022 21:00:00 GMT-0500 (Eastern Standard Time)`), `Sweet + Spicy Idol Songs`, `Unarchived karaoke`],
+[`Sara Nagare`, new Date(`Tue Feb 01 2022 00:00:00 GMT-0500 (Eastern Standard Time)`), `Kerbal Space Program`, ``],
+[`Sara Nagare`, new Date(`Wed Feb 02 2022 20:00:00 GMT-0500 (Eastern Standard Time)`), `Alan Wake`, `(Finale)`],
+[`Sara Nagare`, new Date(`Thu Feb 03 2022 17:00:00 GMT-0500 (Eastern Standard Time)`), `Minecraft in the Mornings!`, ``],
+[`Sara Nagare`, new Date(`Sun Feb 06 2022 00:00:00 GMT-0500 (Eastern Standard Time)`), `Sara's Sunday Session`, ``]
 ];
