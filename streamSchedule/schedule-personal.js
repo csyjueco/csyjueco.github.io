@@ -1,7 +1,22 @@
 var oldschedule = [
+[`Aoi Tokimori`, new Date(`Mon Jan 31 2022 21:00:00 GMT-0500 (Eastern Standard Time)`), `slither.io`, ``],
+[`Aoi Tokimori`, new Date(`Thu Feb 03 2022 00:00:00 GMT-0500 (Eastern Standard Time)`), `Cover Recording Session`, ``],
+[`Aoi Tokimori`, new Date(`Sat Feb 05 2022 02:00:00 GMT-0500 (Eastern Standard Time)`), `Birthday Celebration!`, ``],
+[`Aoi Tokimori`, new Date(`Sat Feb 05 2022 20:00:00 GMT-0500 (Eastern Standard Time)`), `Unarchived English Karaoke`, ``],
+[`Reiny`, new Date(`Wed Feb 02 2022 13:00:00 GMT-0500 (Eastern Standard Time)`), `Dorfromantik & Chill`, ``],
+[`Reiny`, new Date(`Fri Feb 04 2022 13:00:00 GMT-0500 (Eastern Standard Time)`), `Art Stream!`, ``],
+[`Reiny`, new Date(`Sat Feb 05 2022 09:00:00 GMT-0500 (Eastern Standard Time)`), `Drawing with Non Anon!`, ``],
 [`Sara Nagare`, new Date(`Sun Jan 30 2022 21:00:00 GMT-0500 (Eastern Standard Time)`), `Sweet + Spicy Idol Songs`, `Unarchived karaoke`],
 [`Sara Nagare`, new Date(`Tue Feb 01 2022 00:00:00 GMT-0500 (Eastern Standard Time)`), `Kerbal Space Program`, ``],
 [`Sara Nagare`, new Date(`Wed Feb 02 2022 20:00:00 GMT-0500 (Eastern Standard Time)`), `Alan Wake`, `(Finale)`],
 [`Sara Nagare`, new Date(`Thu Feb 03 2022 17:00:00 GMT-0500 (Eastern Standard Time)`), `Minecraft in the Mornings!`, ``],
-[`Sara Nagare`, new Date(`Sun Feb 06 2022 00:00:00 GMT-0500 (Eastern Standard Time)`), `Sara's Sunday Session`, ``]
+[`Sara Nagare`, new Date(`Sun Feb 06 2022 00:00:00 GMT-0500 (Eastern Standard Time)`), `Sara's Sunday Session`, ``],
+[`Saruei`, new Date(`Tue Feb 01 2022 15:00:00 GMT-0500 (Eastern Standard Time)`), `Bloodborne`, ``],
+[`Saruei`, new Date(`Wed Feb 02 2022 15:00:00 GMT-0500 (Eastern Standard Time)`), `Chatting & Sponsor`, ``],
+[`Saruei`, new Date(`Thu Feb 03 2022 14:00:00 GMT-0500 (Eastern Standard Time)`), `It Takes Two`, `ft. Shylily`],
+[`Saruei`, new Date(`Fri Feb 04 2022 16:00:00 GMT-0500 (Eastern Standard Time)`), `Random horror game`, ``],
+[`Saruei`, new Date(`Sat Feb 05 2022 15:00:00 GMT-0500 (Eastern Standard Time)`), `Bloodborne`, ``],
+[`Saruei`, new Date(`Sat Feb 05 2022 20:00:00 GMT-0500 (Eastern Standard Time)`), `Patreon VRC meetup`, ``],
+[`Saruei`, new Date(`Sun Feb 06 2022 15:00:00 GMT-0500 (Eastern Standard Time)`), `VR Game!`, ``],
+[`Saruei`, new Date(`Sun Feb 06 2022 20:00:00 GMT-0500 (Eastern Standard Time)`), `Patreon VRC meetup`, ``]
 ];
