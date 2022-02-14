@@ -1,0 +1,185 @@
+html {
+	--contentWidth: calc(75vw);
+	--headerHeight: 70px;
+	--defaultMargin: 10px;
+	
+	--colorBackground: #E5E5E5;
+	--ybbColorBackground: #FDFBB4;
+	--dbbColorBackground: #DFF6F2;
+	--playerColorBackground: #848484;
+	
+	--moodColorHappy: #FDFBB4;
+	--moodColorMad: #DD3030;
+	--moodColorSad: #ADB3CB;
+	--moodColorShy: #EBC6D3;
+	--moodColorQueezy: #3EB155;
+	--moodColorScared: #FFFFFF;
+	
+	--parHeight: calc(2 * var(--defaultMargin));
+}
+
+body {
+	width: var(--contentWidth);
+	
+	margin: 0 auto;
+}
+
+#header {
+	display: flex;
+	flex-direction: row;
+	
+	width: var(--contentWidth);
+	height: var(--headerHeight);
+	margin-bottom: var(--defaultMargin);
+	
+	background: var(--colorBackground);
+	
+	border-bottom-left-radius: var(--defaultMargin);
+	border-bottom-right-radius: var(--defaultMargin);
+	
+	border-left: 1px solid var(--colorBackground);
+	border-right: 1px solid var(--colorBackground);
+	border-bottom: 1px solid var(--colorBackground);
+	
+	overflow: clip;
+}
+
+#header > #moods {
+	display: flex;
+	flex-direction: row;
+}
+
+#header > #moods > .mood {
+	height: var(--headerHeight);
+	width: var(--headerHeight);
+}
+
+#header > #moods > .mood:hover {
+	cursor: pointer;
+}
+
+#header > #moods > .mood#happy {
+	background: var(--moodColorHappy);
+}
+
+#header > #moods > .mood#mad {
+	background: var(--moodColorMad);
+}
+
+#header > #moods > .mood#sad {
+	background: var(--moodColorSad);
+}
+
+#header > #moods > .mood#shy {
+	background: var(--moodColorShy);
+}
+
+#header > #moods > .mood#queezy {
+	background: var(--moodColorQueezy);
+}
+
+#header > #moods > .mood#scared {
+	background: var(--moodColorScared);
+}
+
+#header > #time {
+	font-family: monospace;
+	
+	position: absolute;
+	right: calc(0.5 * (100vw - var(--contentWidth)));
+	
+	margin: var(--defaultMargin);
+	margin-bottom: calc(2 * var(--defaultMargin));
+	line-height: calc(var(--headerHeight) - (3 * var(--defaultMargin)));
+	font-size: calc(var(--headerHeight) - (3 * var(--defaultMargin)));
+}
+
+@keyframes timeBlink { from { opacity: 0%; } to { opacity: 100%; }  }
+
+
+
+#mainContent {
+	display: flex;
+	flex-direction: row;
+	
+	width: 100%;
+	height: calc(100vh - var(--headerHeight) - var(--defaultMargin));
+	
+	overflow: clip;
+}
+
+#mainContent > #content {
+	width: calc(var(--contentWidth) - 300px - (2 * var(--defaultMargin)));
+}
+
+#mainContent > #content > #title {
+	height: calc(3 * var(--parHeight));
+	
+	margin: var(--defaultMargin);
+	background: var(--colorBackground);
+	border-radius: calc(var(--defaultMargin) * 0.75);
+}
+
+#mainContent > #content > #player {
+	height: calc((var(--contentWidth) - 300px - (2 * var(--defaultMargin))) * 9 / 16);
+	
+	margin: var(--defaultMargin);
+	background: var(--playerColorBackground);
+	border-radius: calc(var(--defaultMargin) * 0.75);
+}
+
+#mainContent > #content > #paragraphs > div {
+	height: var(--parHeight);
+	
+	margin: var(--defaultMargin);
+	background: var(--colorBackground);
+	border-radius: calc(var(--defaultMargin) * 0.75);
+}
+
+#mainContent > #content > #paragraphs > div.finalPar1 {
+	width: calc(0.65 * (var(--contentWidth) - 300px - (2 * var(--defaultMargin))));
+	margin-bottom: calc(2 * var(--defaultMargin));
+}
+
+#mainContent > #content > #paragraphs > div.finalPar2 {
+	width: calc(0.85 * (var(--contentWidth) - 300px - (2 * var(--defaultMargin))));
+	margin-bottom: calc(2 * var(--defaultMargin));
+}
+
+#mainContent > #content > #paragraphs > div.finalPar3 {
+	width: calc(0.35 * (var(--contentWidth) - 300px - (2 * var(--defaultMargin))));
+	margin-bottom: calc(2 * var(--defaultMargin));
+}
+
+
+
+
+
+#mainContent > #sideBar > div {
+	width: 300px;
+	margin: var(--defaultMargin);
+}
+
+#mainContent > #sideBar > #yellowBigBox {
+	display: flex;
+	align-items: center;
+	
+	height: 250px;
+	
+	background: var(--ybbColorBackground);
+}
+
+#mainContent > #sideBar > #yellowBigBox > #boxFace {
+	width: 100%;
+
+	font-size: 25px;
+	text-align: center;
+}
+
+@keyframes changeMood { from { background: var(--ybbColorBackground); } to { background: var(--moodColorNew); }  }
+
+#mainContent > #sideBar > #doubleBigBox {
+	height: 600px;
+	
+	background: var(--dbbColorBackground);
+}
