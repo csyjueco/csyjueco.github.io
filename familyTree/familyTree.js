@@ -511,7 +511,7 @@ p.name:hover, p.name:active {
 	
 	background-color: lavender;
 	height: 0%;
-	transition: height 2s;
+	transition: height 1.25s;
 }
 
 #profilePic > img.active {
