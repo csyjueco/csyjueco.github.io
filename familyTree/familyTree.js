@@ -2,8 +2,8 @@ var sampleData = [
 	['name', 'dob', 'p1', 'p2', 'mTo'],
 	['white', 1975, , , 'black'],
 	['black', 1980, , , 'white'],
-	['duc', 1981, , , 'du ck'],
-	['du ck', 1982, , , 'duc'],
+	['Duc', 1981, , , 'Du ck'],
+	['Du ck', 1982, , , 'Duc'],
 	['yel-low', 1985, , , 'blue'],
 	['red', 1986, 'black', 'white', 'brown'],
 	['green', 1988, 'white', 'black'],
@@ -12,7 +12,7 @@ var sampleData = [
 	['oak', 2000, 'brown', 'red', ],
 	['light ning', 2000, 'yel-low', 'blue', ''],
 	['birch', 2010, 'red', 'brown', ],
-	['gus', 2011, 'du ck', 'duc', ]
+	['gus', 2011, 'Du ck', 'Duc', ]
 ];
 
 var data = sampleData;
@@ -484,9 +484,17 @@ p.name:hover, p.name:active {
 	padding: 0px;
 }
 
+#profileInfo p.name {
+	font-style: oblique;
+}
+
 #profileInfo > p {
 	margin-bottom: 5px;
 	margin-top: 10px;
+}
+
+#profileName > p {
+	font-size: x-large;
 }
 
 #profilePic {
