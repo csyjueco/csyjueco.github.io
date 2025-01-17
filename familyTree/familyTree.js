@@ -1,25 +1,24 @@
 var sampleData = [
-	['name', 'dob', 'p1', 'p2', 'mTo'],
-	['white', 1975, , , 'black'],
-	['black', 1980, , , 'white'],
-	['Duc', 1981, , , 'Du ck'],
-	['Du ck', 1982, , , 'Duc'],
-	['yel-low', 1985, , , 'blue'],
-	['red', 1986, 'black', 'white', 'brown'],
-	['green', 1988, 'white', 'black'],
-	['blue', 1990, 'black', 'white', 'yel-low'],
-	['brown', 1995, , , 'red'],
-	['oak', 2000, 'brown', 'red', ],
-	['light ning', 2000, 'yel-low', 'blue', ''],
-	['birch', 2010, 'red', 'brown', ],
-	['gus', 2011, 'Du ck', 'Duc', ]
+	['name', 'p1', 'p2', 'mTo','funFacts','imgs'],
+	['white', , , 'black', 'fun fact 1|fun fact 2|3 fact fun', ],
+	['black', , , 'white', , ],
+	['Duc', , , 'Du ck', , ],
+	['Du ck', , , 'Duc', , ],
+	['yel-low', , , 'blue', , ],
+	['red', 'black', 'white', 'brown', , ],
+	['green', 'white', 'black', , ],
+	['blue', 'black', 'white', 'yel-low', , ],
+	['brown', , , 'red', , ],
+	['oak', 'brown', 'red', ,'tree hugger' , ],
+	['light ning', 'yel-low', 'blue', '', 'milk before cereal|man fish > fish man!!', ],
+	['birch', 'red', 'brown', , , ],
+	['gus', 'Du ck', 'Duc', , , ]
 ];
-
-var data = sampleData;
 
 
 
 /* START: ADDING NEW COLUMNS BASED ON THE ORIGINAL COLUMNS */
+var data = sampleData;
 
 // filling in blank spaces with empty strings
 for (var i = 0; i < data.length; i++) {
@@ -32,8 +31,9 @@ for (var i = 0; i < data.length; i++) {
 var p1Index = data[0].indexOf('p1');
 var p2Index = data[0].indexOf('p2');
 var nameIndex = data[0].indexOf('name');
-var dobIndex = data[0].indexOf('dob');
 var mToIndex = data[0].indexOf('mTo');
+var funFactsIndex = data[0].indexOf('funFacts');
+var imgsIndex = data[0].indexOf('imgs');
 
 // creating couple key based on parent names in alphabetical order
 data[0].push('parentKey');
@@ -320,10 +320,10 @@ function updateProfile (personKey) {
 	
 	document.querySelectorAll('#profilePic')[0].innerText = '';
 	// TODO: create support for unique collections of images for each person
-	let imgFiles = ['600x600', '640x360', '400x600'];
+	let imgFiles = person[imgsIndex] == '' ? ['600x600', '640x360', '400x600'] : person[imgsIndex].split('|');
 	for (var i = 0; i < 5; i++) {
 		let picDiv = document.createElement('img');
-		picDiv.src = 'fillerImg\\' + imgFiles[i % imgFiles.length] + '.png';
+		picDiv.src = (person[imgsIndex] == '' ? 'fillerImg\\' : (person[personKeyIndex] + '\\')) + imgFiles[i % imgFiles.length] + '.png';
 		picDiv.setAttribute('next', (i + 1) % 5);
 		
 		if (i == 0) {
@@ -340,12 +340,16 @@ function updateProfile (personKey) {
 	}
 	
 	// TODO: change #profileInfo section to one for fun facts, hobbies, etc.
-	// TODO: create a #profileRelated section and put related people into that section (maybe start minimized?)
+	// TODO: create a #profileRelated section and put related people into that section? (maybe start minimized?)
 	document.querySelectorAll('#profileInfo')[0].innerText = '';
-	if (person[dobIndex] != '') {
-		let dobEntry = document.createElement('p');
-		dobEntry.innerText = 'Date of birth: ' + person[dobIndex];
-		document.querySelectorAll('#profileInfo')[0].append(dobEntry);
+	if (person[funFactsIndex] != '') {
+		let facts = person[funFactsIndex].split('|');
+		
+		for (var i = 0; i < facts.length; i++) {
+			let factEntry = document.createElement('p');
+			factEntry.innerText = facts[i];
+			document.querySelectorAll('#profileInfo')[0].append(factEntry);
+		}
 	}
 	
 	if (person[classListIndex].includes('m')) {
