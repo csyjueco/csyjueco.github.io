@@ -2,7 +2,7 @@ var sampleData = [
 	['name', 'p1', 'p2', 'mTo','funFacts','imgs', 'personKey'],
 	['white', , , 'black', 'fun fact 1|fun fact 2|3 fact fun', , ],
 	['black', , , 'white', , , ],
-	['Duc', , , 'Du ck', , , 'Dock'],
+	['Duc', , , 'Du ck', , 'duckImg1.jpg|duckImg2.jpg|duckImg3.jpg', 'Dock'],
 	['Du ck', , , 'Duc', , , ],
 	['yel-low', , , 'blue', , , ],
 	['red', 'black', 'white', 'brown', , , ],
@@ -36,6 +36,7 @@ var funFactsIndex = data[0].indexOf('funFacts');
 var imgsIndex = data[0].indexOf('imgs');
 
 // creating a unique key to use as an id for each person that doesn't have one
+// TODO: create export function for data columns
 var personKeyIndex = data[0].indexOf('personKey');
 for (var i = 1; i < data.length; i++) {
 	let createPersonKey = true
@@ -336,11 +337,11 @@ function updateProfile (personKey) {
 	
 	document.querySelectorAll('#profilePic')[0].innerText = '';
 	// TODO: create support for unique collections of images for each person
-	let imgFiles = person[imgsIndex] == '' ? ['600x600', '640x360', '400x600'] : person[imgsIndex].split('|');
-	for (var i = 0; i < 5; i++) {
+	let imgFiles = person[imgsIndex] == '' ? ['600x600.png', '640x360.png', '400x600.png'] : person[imgsIndex].split('|');
+	for (var i = 0; i < imgFiles.length; i++) {
 		let picDiv = document.createElement('img');
-		picDiv.src = (person[imgsIndex] == '' ? 'fillerImg\\' : (person[personKeyIndex] + '\\')) + imgFiles[i % imgFiles.length] + '.png';
-		picDiv.setAttribute('next', (i + 1) % 5);
+		picDiv.src = (person[imgsIndex] == '' ? 'fillerImg\\' : (person[personKeyIndex] + '\\')) + imgFiles[i % imgFiles.length];
+		picDiv.setAttribute('next', (i + 1) % imgFiles.length);
 		
 		if (i == 0) {
 			picDiv.classList.add('active');
@@ -465,8 +466,6 @@ document.querySelectorAll('body')[0].append(toggleView);
 /* START: CSS */
 var CSSstyles = document.createElement('style');
 document.querySelectorAll('body')[0].append(CSSstyles);
-// TODO: partially copy pasted so some styles can be removed
-// TODO (MED): change image transition from height to something that looks better (maybe 100 - 0 opacity/transparency on current image and then 0 - 100 on new image after)
 // TODO (LOW): set gen specific styling through JS (e.g. table[gen='2'] > tr:nth-of-type(1))
 CSSstyles.textContent = `
 #familyTree {
