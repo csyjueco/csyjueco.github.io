@@ -1,18 +1,18 @@
 var sampleData = [
-	['name', 'p1', 'p2', 'mTo','funFacts','imgs'],
-	['white', , , 'black', 'fun fact 1|fun fact 2|3 fact fun', ],
-	['black', , , 'white', , ],
-	['Duc', , , 'Du ck', , ],
-	['Du ck', , , 'Duc', , ],
-	['yel-low', , , 'blue', , ],
-	['red', 'black', 'white', 'brown', , ],
-	['green', 'white', 'black', , ],
-	['blue', 'black', 'white', 'yel-low', , ],
-	['brown', , , 'red', , ],
-	['oak', 'brown', 'red', ,'tree hugger' , ],
-	['light ning', 'yel-low', 'blue', '', 'milk before cereal|man fish > fish man!!', ],
-	['birch', 'red', 'brown', , , ],
-	['gus', 'Du ck', 'Duc', , , ]
+	['name', 'p1', 'p2', 'mTo','funFacts','imgs', 'personKey'],
+	['white', , , 'black', 'fun fact 1|fun fact 2|3 fact fun', , ],
+	['black', , , 'white', , , ],
+	['Duc', , , 'Du ck', , , 'Dock'],
+	['Du ck', , , 'Duc', , , ],
+	['yel-low', , , 'blue', , , ],
+	['red', 'black', 'white', 'brown', , , ],
+	['green', 'white', 'black', , , ],
+	['blue', 'black', 'white', 'yel-low', , , ],
+	['brown', , , 'red', , , ],
+	['oak', 'brown', 'red', ,'tree hugger' , , ],
+	['light ning', 'yel-low', 'blue', '', 'milk before cereal|man fish > fish man!!', , ],
+	['birch', 'red', 'brown', , , , ],
+	['gus', 'Du ck', 'Duc', , , , ]
 ];
 
 
@@ -34,6 +34,36 @@ var nameIndex = data[0].indexOf('name');
 var mToIndex = data[0].indexOf('mTo');
 var funFactsIndex = data[0].indexOf('funFacts');
 var imgsIndex = data[0].indexOf('imgs');
+
+// creating a unique key to use as an id for each person that doesn't have one
+var personKeyIndex = data[0].indexOf('personKey');
+for (var i = 1; i < data.length; i++) {
+	let createPersonKey = true
+	if (data[i][personKeyIndex] != '') {
+		let count = 0
+		
+		for (var j = 1; j < data.length; j++) {
+			if (data[i][personKeyIndex] == data[j][personKeyIndex]) {
+				count++;
+			}
+		}
+		
+		if (count < 2) {
+			createPersonKey = false;
+		}
+	}
+	
+	if (createPersonKey) {
+		let key = data[i][nameIndex].replace(' ','').toLowerCase();
+		let count = 0;
+		for (var j = 1; j < i; j++) {
+			if (data[j][nameIndex] == data[i][nameIndex]) {
+				count++
+			}
+		}
+		data[i][personKeyIndex] = key + count;
+	}
+}
 
 // creating couple key based on parent names in alphabetical order
 data[0].push('parentKey');
@@ -60,20 +90,6 @@ for (var i = 1; i < data.length; i++) {
 		let mKey = partner1 > partner2 ? partner1 + partner2 : partner2 + partner1;
 		data[i][mKeyIndex] = mKey;
 	}
-}
-
-// creating a unique key to use as an id for each person
-data[0].push('personKey');
-var personKeyIndex = data[0].indexOf('personKey');
-for (var i = 1; i < data.length; i++) {
-	let key = data[i][nameIndex].replace(' ','').toLowerCase();
-	let count = 0;
-	for (var j = 1; j < i; j++) {
-		if (data[j][nameIndex] == data[i][nameIndex]) {
-			count++
-		}
-	}
-	data[i][personKeyIndex] = key + count;
 }
 
 // creating an array with classes to be assigned to the HTML element of the person
