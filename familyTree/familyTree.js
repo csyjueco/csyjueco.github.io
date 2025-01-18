@@ -18,7 +18,7 @@ var sampleData = [
 
 
 /* START: ADDING NEW COLUMNS BASED ON THE ORIGINAL COLUMNS */
-var data = sampleData;
+var data = familyData ? familyData : sampleData;
 
 // filling in blank spaces with empty strings
 for (var i = 0; i < data.length; i++) {
@@ -31,13 +31,14 @@ for (var i = 0; i < data.length; i++) {
 var p1Index = data[0].indexOf('p1');
 var p2Index = data[0].indexOf('p2');
 var nameIndex = data[0].indexOf('name');
+var nicknameIndex = data[0].indexOf('nickname');
 var mToIndex = data[0].indexOf('mTo');
 var funFactsIndex = data[0].indexOf('funFacts');
 var imgsIndex = data[0].indexOf('imgs');
+var personKeyIndex = data[0].indexOf('personKey');
 
 // creating a unique key to use as an id for each person that doesn't have one
 // TODO: create export function for data columns
-var personKeyIndex = data[0].indexOf('personKey');
 for (var i = 1; i < data.length; i++) {
 	let createPersonKey = true
 	if (data[i][personKeyIndex] != '') {
@@ -182,6 +183,11 @@ for (var i = 1; i < data.length; i++) {
 	// p element with the person's name and a click event to update the profile
 	let nameText = document.createElement('p');
 	nameText.innerText = data[i][nameIndex];
+	
+	if (data[i][nicknameIndex] != '') {
+		nameText.innerText = nameText.innerText + ' (' + data[i][nicknameIndex].replaceAll("|",", ") + ')';
+	}
+	
 	nameText.classList.add('name');
 		
 	nameText.addEventListener('click', (event) => {
@@ -333,7 +339,7 @@ function updateProfile (personKey) {
 		}
 	}
 	
-	document.querySelectorAll('#profileName')[0].firstChild.innerText = person[nameIndex];
+	document.querySelectorAll('#profileName')[0].firstChild.innerText = person[nameIndex] + (person[nicknameIndex] != '' ? (' (' + person[nicknameIndex].replaceAll("|",", ") + ')') : '');
 	
 	document.querySelectorAll('#profilePic')[0].innerText = '';
 	// TODO: create support for unique collections of images for each person
@@ -564,7 +570,11 @@ table[gen='3'] > tr:nth-of-type(1) {
 }
 
 table[gen='4'] > tr:nth-of-type(1) {
-	background-color: yellow;
+	background-color: honeydew;
+}
+
+table[gen='5'] > tr:nth-of-type(1) {
+	background-color: blanchedalmond;
 }
 
 table table {
