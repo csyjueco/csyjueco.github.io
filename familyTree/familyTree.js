@@ -1,8 +1,8 @@
 var sampleData = [
-	['name', 'p1', 'p2', 'mTo','funFacts','imgs', 'personKey'],
+	['name', 'p1', 'p2', 'mTo','funFacts','imgs', 'personKey', 'nickname'],
 	['white', , , 'black', 'fun fact 1|fun fact 2|3 fact fun', , ],
 	['black', , , 'white', , , ],
-	['Duc', , , 'Du ck', , 'duckImg1.jpg|duckImg2.jpg|duckImg3.jpg', 'Dock'],
+	['Duc', , , 'Du ck', , 'duckImg1.jpg|duckImg2.jpg|duckImg3.jpg|duckImg4-long.jpg', 'Dock'],
 	['Du ck', , , 'Duc', , , ],
 	['yel-low', , , 'blue', , , ],
 	['red', 'black', 'white', 'brown', , , ],
@@ -12,13 +12,14 @@ var sampleData = [
 	['oak', 'brown', 'red', ,'tree hugger' , , ],
 	['light ning', 'yel-low', 'blue', '', 'milk before cereal|man fish > fish man!!', , ],
 	['birch', 'red', 'brown', , , , ],
-	['gus', 'Du ck', 'Duc', , , , ]
+	['gus', 'Du ck', 'Duc', , , 'duckImg1.jpg|duckImg2.jpg|duckImg3.jpg|duckImg4-long.jpg', ]
 ];
 
 
 
 /* START: ADDING NEW COLUMNS BASED ON THE ORIGINAL COLUMNS */
 var data = familyData ? familyData : sampleData;
+// data = sampleData;
 
 // filling in blank spaces with empty strings
 for (var i = 0; i < data.length; i++) {
@@ -331,7 +332,56 @@ profile.append(profileInfo);
 
 document.querySelectorAll('body')[0].append(profile);
 
+// create p.name that updates profile when clicked
+function createName (person) {
+	let name = document.createElement('p');
+	name.innerText = person[nameIndex];
+	name.setAttribute('key', person[personKeyIndex]);
+	name.classList.add('name');
+	
+	name.addEventListener('click', (event) => {
+		updateProfile(event.srcElement.getAttribute('key'));
+	});
+	
+	return name;
+}
+
+// create div.imgGroup where clicking on the img switches to the next one
+function createImageCarousel (person) {
+	let picDiv = document.createElement('div');
+	picDiv.classList.add('imgGroup')
+	
+	let picPaths = person[imgsIndex].split('|').map((filename) => person[personKeyIndex] + '\\' + filename);
+	
+	for (var i = 0; i < picPaths.length; i++) {
+		let picImg = document.createElement('img');
+		picImg.src = picPaths[i];
+		picImg.setAttribute('next', ((i + 1) % picPaths.length));
+		
+		if (picPaths[i].includes('-long')) {
+			picImg.classList.add('long');
+		}
+		
+		if (i == 0) {
+			picImg.classList.add('active');
+		}
+		
+		// hide current picture when it's clicked and show the next image
+		picImg.addEventListener('click', (event) => {
+			event.srcElement.classList.toggle('active');
+			event.srcElement.parentNode.childNodes[parseInt(event.srcElement.getAttribute('next'))].classList.toggle('active');
+		});
+		
+		picDiv.append(picImg);
+	}
+	
+	return picDiv;
+}
+
 function updateProfile (personKey) {
+	// scroll to the top of the page whenever the profile is updated
+	window.scrollTo(0, 0);
+	
 	let person;
 	for (var i = 1; i < data.length; i++) {
 		if (personKey == data[i][personKeyIndex]) {
@@ -341,29 +391,24 @@ function updateProfile (personKey) {
 	
 	document.querySelectorAll('#profileName')[0].firstChild.innerText = person[nameIndex] + (person[nicknameIndex] != '' ? (' (' + person[nicknameIndex].replaceAll("|",", ") + ')') : '');
 	
+	// adding images into the profile
 	document.querySelectorAll('#profilePic')[0].innerText = '';
-	// TODO: create support for unique collections of images for each person
-	let imgFiles = person[imgsIndex] == '' ? ['600x600.png', '640x360.png', '400x600.png'] : person[imgsIndex].split('|');
-	for (var i = 0; i < imgFiles.length; i++) {
-		let picDiv = document.createElement('img');
-		picDiv.src = (person[imgsIndex] == '' ? 'fillerImg\\' : (person[personKeyIndex] + '\\')) + imgFiles[i % imgFiles.length];
-		picDiv.setAttribute('next', (i + 1) % imgFiles.length);
-		
-		if (i == 0) {
-			picDiv.classList.add('active');
-		}
-		
-		document.querySelectorAll('#profilePic')[0].append(picDiv);
-		
-		// hide current picture when it's clicked and show the next image
-		picDiv.addEventListener('click', (event) => {
-			event.srcElement.classList.toggle('active');
-			document.querySelectorAll('#profilePic > img')[parseInt(event.srcElement.getAttribute('next'))].classList.toggle('active');
-		});
+	let imgFiles
+	
+	if (person[imgsIndex] == '') {
+		imgFiles = ['600x600.png', '640x360.png', '400x600.png'].map((filename) => 'fillerImg\\' + filename);
+	} else {
+		imgFiles = person[imgsIndex].split('|').map((filename) => person[personKeyIndex] + '\\' + filename);
 	}
 	
-	// TODO: change #profileInfo section to one for fun facts, hobbies, etc.
-	// TODO: create a #profileRelated section and put related people into that section? (maybe start minimized?)
+	for (var i = 0; i < imgFiles.length; i++) {
+		let picDiv = document.createElement('img');
+		picDiv.src = imgFiles[i];
+		
+		document.querySelectorAll('#profilePic')[0].append(picDiv);
+	}
+	
+	// adding fun facts and related people
 	document.querySelectorAll('#profileInfo')[0].innerText = '';
 	if (person[funFactsIndex] != '') {
 		let facts = person[funFactsIndex].split('|');
@@ -377,7 +422,7 @@ function updateProfile (personKey) {
 	
 	if (person[classListIndex].includes('m')) {
 		// creating entry in #profileInfo for partner
-		let partnerEntry = document.createElement('p');
+		let partnerEntry = document.createElement('div');
 		partnerEntry.innerText = 'Married to: ';
 		
 		let partner;
@@ -388,35 +433,26 @@ function updateProfile (personKey) {
 			}
 		}
 		
-		let partnerName = document.createElement('p');
-		partnerName.innerText = partner[nameIndex];
-		partnerName.setAttribute('key', partner[personKeyIndex]);
-		partnerName.classList.add('name');
+		partnerEntry.append(createName(partner));
 		
-		partnerName.addEventListener('click', (event) => {
-			updateProfile(event.srcElement.getAttribute('key'));
-		})
+		if (partner[imgsIndex] != '') {
+			partnerEntry.append(createImageCarousel(partner));
+		}
 		
-		partnerEntry.append(partnerName);
 		
 		document.querySelectorAll('#profileInfo')[0].append(partnerEntry);
 		
 		// creating entry in #profileInfo if person has children
-		let childrenEntry = document.createElement('p');
+		let childrenEntry = document.createElement('div');
 		childrenEntry.innerText = 'Children: ';
 		
 		for (var i = 1; i < data.length; i++) {
 			if (person[mKeyIndex] == data[i][parentKeyIndex]) {
-				let childName = document.createElement('p');
-				childName.innerText = data[i][nameIndex];
-				childName.setAttribute('key', data[i][personKeyIndex]);
-				childName.classList.add('name');
+				childrenEntry.append(createName(data[i]));
 				
-				childName.addEventListener('click', (event) => {
-					updateProfile(event.srcElement.getAttribute('key'));
-				})
-				
-				childrenEntry.append(childName);
+				if (data[i][imgsIndex] != '') {
+					childrenEntry.append(createImageCarousel(data[i]));
+				}
 			}
 		}
 		
@@ -427,21 +463,16 @@ function updateProfile (personKey) {
 	
 	// creating entry in #profileInfo if person has parents in the family tree
 	if (person[classListIndex].includes('c')) {
-		let parentEntry = document.createElement('p');
+		let parentEntry = document.createElement('div');
 		parentEntry.innerText = 'Parents: ';
 		
 		for (var i = 1; i < data.length; i++) {
 			if (person[parentKeyIndex] == data[i][mKeyIndex]) {
-				let parentName = document.createElement('p');
-				parentName.innerText = data[i][nameIndex];
-				parentName.setAttribute('key', data[i][personKeyIndex]);
-				parentName.classList.add('name');
+				parentEntry.append(createName(data[i]));
 				
-				parentName.addEventListener('click', (event) => {
-					updateProfile(event.srcElement.getAttribute('key'));
-				})
-				
-				parentEntry.append(parentName);
+				if (data[i][imgsIndex] != '') {
+					parentEntry.append(createImageCarousel(data[i]));
+				}
 			}
 		}
 		
@@ -453,18 +484,53 @@ function updateProfile (personKey) {
 
 
 /* START: CREATING TOGGLE */
-// TODO: figure out if the toggle needs to be changed to a menu button
-// TODO: if it stays as a toggle change innerText/icon based on if 'familyTree' or 'profile' element is showing
+// TODO: changed toggle to a menu button
+// TODO: add a way to collapse all in the family tree
+var menuOptions = document.createElement('div');
+menuOptions.id = 'menu';
+
+var menuButton = document.createElement('div');
+menuButton.id = 'menuButton';
+menuButton.innerText = 'options';
+menuButton.classList.add('button');
+
+menuButton.addEventListener('click', (event) => {
+	event.srcElement.parentNode.classList.toggle('collapse');
+});
+
 var toggleView = document.createElement('div');
 toggleView.id = 'toggle';
-toggleView.innerText = 'togle~'
+toggleView.innerText = 'togle~';
+toggleView.classList.add('button');
 
 toggleView.addEventListener('click', (event) => {
 	document.querySelectorAll('#familyTree')[0].classList.toggle('hide');
 	document.querySelectorAll('#profile')[0].classList.toggle('hide');
 });
 
-document.querySelectorAll('body')[0].append(toggleView);
+var expandCollapseButton = document.createElement('div');
+expandCollapseButton.id = 'expandCollapse';
+expandCollapseButton.innerText = '-';
+expandCollapseButton.classList.add('button');
+
+// code to collapse whole family tree
+expandCollapseButton.addEventListener('click', (event) => {
+	if (event.srcElement.innerText == '-') {
+		document.querySelectorAll('table[gen], td[gen]').forEach((el) => el.classList.add('collapse'));
+		event.srcElement.innerText = '+';
+	} else {
+		document.querySelectorAll('table[gen], td[gen]').forEach((el) => el.classList.remove('collapse'));
+		event.srcElement.innerText = '-';
+	}
+	
+	document.querySelectorAll('td[gen]').forEach((el) => el.innerText = el.classList.contains('collapse') ? '+' : el.getAttribute('gen'));
+});
+
+menuOptions.append(expandCollapseButton);
+menuOptions.append(toggleView);
+menuOptions.append(menuButton);
+
+document.querySelectorAll('body')[0].append(menuOptions);
 /* END: CREATING TOGGLE */
 
 
@@ -481,6 +547,41 @@ CSSstyles.textContent = `
 
 .hide {
 	display: none;
+}
+
+#menu {
+	position: fixed;
+	
+	bottom: 20px;
+	right: 20px;
+}
+
+#menu > .button {
+	background-color: lightgray;
+	opacity: 0.5;
+	
+	border: 2px solid gray;
+	border-radius: 10px;
+	height: 50px;
+	width: 50px;
+	
+	margin-top: 5px;
+	
+	transition: height 0.5s, opacity 0.5s;
+}
+
+#menu.collapse > .button {
+	height: 0px;
+	opacity: 0;
+}
+
+#menu.collapse > .button:last-child {
+	height: 50px;
+	opacity: 0.5;
+}
+
+#menu > .button:hover {
+	opacity: 0.75;
 }
 
 p {
@@ -513,7 +614,7 @@ p.name:hover, p.name:active {
 	font-style: oblique;
 }
 
-#profileInfo > p {
+#profileInfo > p, #profileInfo > div {
 	margin-bottom: 5px;
 	margin-top: 10px;
 }
@@ -522,25 +623,35 @@ p.name:hover, p.name:active {
 	font-size: x-large;
 }
 
-#profilePic {
-	background-color: gray;
-	height: 200px;
+#profilePic > img {
 	width: 100%;
+	margin-bottom: 5px;
+	margin-top: 10px;
 }
 
-#profilePic > img {
+#profileInfo .imgGroup {
+	height: 200px;	
+	overflow: hidden;
+}
+
+#profileInfo .imgGroup > img {
 	display: block;
 	margin-left: auto;
 	margin-right: auto;
-	overflow: hidden;
 	
-	background-color: lavender;
 	height: 0%;
-	transition: height 1.25s;
+	width: 0%;
+	transition: height 1.25s, width 1.25s;
 }
 
-#profilePic > img.active {
+#profileInfo .imgGroup > img.active {
+	width: auto;
 	height: 100%;
+}
+
+#profileInfo .imgGroup > img.active.long {
+	width: 100%;
+	height: auto;
 }
 
 table {
@@ -594,25 +705,6 @@ td.collapse {
 
 td.name:hover, td.name:active {
 	opacity: 0.5;
-}
-
-#toggle {
-	position: fixed;
-	
-	bottom: 20px;
-	right: 20px;
-	
-	background-color: lightgray;
-	opacity: 0.5;
-	
-	border: 2px solid gray;
-	border-radius: 10px;
-	height: 50px;
-	width: 50px;
-}
-
-#toggle:hover, #toggle:active {
-	opacity: 0.75;
 }
 
 tr > td:nth-of-type(1) {
