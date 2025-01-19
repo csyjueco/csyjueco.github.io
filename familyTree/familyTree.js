@@ -129,7 +129,7 @@ for (var i = 1; i < data.length; i++) {
 	}
 }
 
-var startingGen = 2;
+var startingGen = 1;
 data[0].push('gen');
 var genIndex = data[0].indexOf('gen');
 
@@ -353,11 +353,15 @@ function createName (person) {
 }
 
 // create div.imgGroup where clicking on the img switches to the next one
-function createImageCarousel (person) {
+function createImageCarousel (person, limit = 2) {
 	let picDiv = document.createElement('div');
 	picDiv.classList.add('imgGroup')
 	
 	let picPaths = person[imgsIndex].split('|').map((filename) => person[personKeyIndex] + '\\' + filename);
+	
+	if (typeof limit == 'number' && limit > 0) {
+		picPaths = picPaths.slice(0, limit);
+	}
 	
 	for (var i = 0; i < picPaths.length; i++) {
 		let picImg = document.createElement('img');
@@ -472,6 +476,9 @@ function updateProfile (personKey) {
 		let parentEntry = document.createElement('div');
 		parentEntry.innerText = 'Parents: ';
 		
+		let siblingsEntry = document.createElement('div');
+		siblingsEntry.innerText = 'Siblings: ';
+		
 		for (var i = 1; i < data.length; i++) {
 			if (person[parentKeyIndex] == data[i][mKeyIndex]) {
 				parentEntry.append(createName(data[i]));
@@ -479,10 +486,18 @@ function updateProfile (personKey) {
 				if (data[i][imgsIndex] != '') {
 					parentEntry.append(createImageCarousel(data[i]));
 				}
+			} else if (person[parentKeyIndex] == data[i][parentKeyIndex] && person[nameIndex] != data[i][nameIndex]) {
+				// requirement for the person to to be a child ('c' in classList) excludes people marrying into the family (blank parentKeys)
+				siblingsEntry.append(createName(data[i]));
+				
+				if (data[i][imgsIndex] != '') {
+					siblingsEntry.append(createImageCarousel(data[i]));
+				}
 			}
 		}
 		
 		document.querySelectorAll('#profileInfo')[0].append(parentEntry);
+		document.querySelectorAll('#profileInfo')[0].append(siblingsEntry);
 	}
 }
 /* END: CREATING INITIAL PROFILE SCREEN */
@@ -497,36 +512,46 @@ menuOptions.id = 'menu';
 
 var menuButton = document.createElement('div');
 menuButton.id = 'menuButton';
-menuButton.innerText = 'options';
 menuButton.classList.add('button');
 
-menuButton.addEventListener('click', (event) => {
-	event.srcElement.parentNode.classList.toggle('collapse');
+menuButtonImg = document.createElement('img');
+menuButtonImg.src = 'icons//menu_25dp_000000_FILL0_wght400_GRAD0_opsz24.png';
+menuButton.append(menuButtonImg);
+
+menuButtonImg.addEventListener('click', (event) => {
+	event.srcElement.parentNode.parentNode.classList.toggle('collapse');
 });
 
 var toggleView = document.createElement('div');
 toggleView.id = 'toggle';
-toggleView.innerText = 'togle~';
 toggleView.classList.add('button');
 
-toggleView.addEventListener('click', (event) => {
+toggleViewImg = document.createElement('img');
+toggleViewImg.src = 'icons//table_eye_25dp_000000_FILL0_wght400_GRAD0_opsz24.png';
+toggleView.append(toggleViewImg);
+
+toggleViewImg.addEventListener('click', (event) => {
 	document.querySelectorAll('#familyTree')[0].classList.toggle('hide');
 	document.querySelectorAll('#profile')[0].classList.toggle('hide');
 });
 
 var expandCollapseButton = document.createElement('div');
 expandCollapseButton.id = 'expandCollapse';
-expandCollapseButton.innerText = '-';
 expandCollapseButton.classList.add('button');
+expandCollapseButton.setAttribute('expand', 'true');
+
+expandCollapseButtonImg = document.createElement('img');
+expandCollapseButtonImg.src = 'icons//expand_25dp_000000_FILL0_wght400_GRAD0_opsz24.png';
+expandCollapseButton.append(expandCollapseButtonImg);
 
 // code to collapse whole family tree
-expandCollapseButton.addEventListener('click', (event) => {
-	if (event.srcElement.innerText == '-') {
+expandCollapseButtonImg.addEventListener('click', (event) => {
+	if (event.srcElement.parentNode.getAttribute('expand') == 'true') {
 		document.querySelectorAll('table[gen].expandable').forEach((el) => el.classList.add('collapse'));
-		event.srcElement.innerText = '+';
+		event.srcElement.parentNode.setAttribute('expand', 'false');
 	} else {
 		document.querySelectorAll('table[gen].expandable').forEach((el) => el.classList.remove('collapse'));
-		event.srcElement.innerText = '-';
+		event.srcElement.parentNode.setAttribute('expand', 'true');
 	}
 	
 	document.querySelectorAll('td[gen]').forEach((el) => el.innerText = el.parentNode.parentNode.parentNode.parentNode.parentNode.classList.contains('collapse') ? '+' : el.getAttribute('gen'));
@@ -538,6 +563,23 @@ menuOptions.append(menuButton);
 
 document.querySelectorAll('body')[0].append(menuOptions);
 /* END: CREATING TOGGLE */
+
+
+
+/* START: HELPER FUNCTIONS */
+// print data to add back into data file (to fix personKeys)
+function printData () {
+	let collector = '';
+	for (var i = 1; i < data.length; i++) {
+	  let columns = [nameIndex, nicknameIndex, p1Index, p2Index, mToIndex, personKeyIndex, funFactsIndex, imgsIndex];
+	  for (var j = 0; j < columns.length; j++) {
+		collector = collector + data[i][columns[j]] + ',';
+	  }
+	  collector = collector + '\n'
+	}
+	console.log(collector);
+}
+/* END: HELPER FUNCTIONS */
 
 
 
@@ -576,6 +618,10 @@ CSSstyles.textContent = `
 	transition: height 0.5s, opacity 0.5s;
 }
 
+#menu > .button > img {
+	width: 100%;
+}
+
 #menu.collapse > .button {
 	height: 0px;
 	opacity: 0;
@@ -604,11 +650,6 @@ p.name:hover, p.name:active {
 	max-width: 400px;
 	margin-left: auto;
 	margin-right: auto;
-}
-
-#profile > div {
-	margin-bottom: 5px;
-	margin-top: 10px;
 }
 
 #profile p {
@@ -681,6 +722,10 @@ table.expandable.collapse > tr:nth-of-type(1) {
 table.expandable.collapse > tr:nth-of-type(1) > td td:nth-of-type(1) {
 	font-weight: bold;
 	border: 1px solid black;
+}
+
+table[gen='1'] > tr:nth-of-type(1) {
+	background-color: lightyellow;
 }
 
 table[gen='2'] > tr:nth-of-type(1) {
