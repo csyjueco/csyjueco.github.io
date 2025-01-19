@@ -252,18 +252,25 @@ for (var i = 1; i < data.length; i++) {
 		
 		// toggling collapse class on the table element when the gen element is clicked
 		// and updating the gen element's text based on it
+		// only adding when the table has the 'expandable' class (added in the next section where the familyTree table is getting created)
 		gen.addEventListener('click', (event) => {
-			event.srcElement.parentNode.parentNode.parentNode.parentNode.parentNode.classList.toggle('collapse');
-			event.srcElement.innerText = event.srcElement.parentNode.parentNode.parentNode.parentNode.parentNode.classList.contains('collapse') ? '+' : event.srcElement.getAttribute('gen');
+			if (event.srcElement.parentNode.parentNode.parentNode.parentNode.parentNode.classList.contains('expandable')) {
+				event.srcElement.parentNode.parentNode.parentNode.parentNode.parentNode.classList.toggle('collapse');
+				event.srcElement.innerText = event.srcElement.parentNode.parentNode.parentNode.parentNode.parentNode.classList.contains('collapse') ? '+' : event.srcElement.getAttribute('gen');
+			}
 		});
 		
 		// changes gen element's text to '-' when hovered without the collapse class
 		gen.addEventListener('mouseover', (event) => {
-			event.srcElement.innerText = event.srcElement.parentNode.parentNode.parentNode.parentNode.parentNode.classList.contains('collapse') ? event.srcElement.getAttribute('gen') : '-';
+			if (event.srcElement.parentNode.parentNode.parentNode.parentNode.parentNode.classList.contains('expandable')) {
+				event.srcElement.innerText = event.srcElement.parentNode.parentNode.parentNode.parentNode.parentNode.classList.contains('collapse') ? event.srcElement.getAttribute('gen') : '-';
+			}
 		});
 		
 		gen.addEventListener('mouseout', (event) => {
-			event.srcElement.innerText = event.srcElement.parentNode.parentNode.parentNode.parentNode.parentNode.classList.contains('collapse') ? '+' : event.srcElement.getAttribute('gen');
+			if (event.srcElement.parentNode.parentNode.parentNode.parentNode.parentNode.classList.contains('expandable')) {
+				event.srcElement.innerText = event.srcElement.parentNode.parentNode.parentNode.parentNode.parentNode.classList.contains('collapse') ? '+' : event.srcElement.getAttribute('gen');
+			}
 		});
 	}
 	data[i][elementIndex] = element;
