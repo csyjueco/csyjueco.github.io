@@ -19,7 +19,11 @@ var sampleData = [
 
 /* START: ADDING NEW COLUMNS BASED ON THE ORIGINAL COLUMNS */
 var data = familyData ? familyData : sampleData;
-// data = sampleData;
+
+var utmParams = new URLSearchParams(window.location.search);
+if (utmParams.has('test')) {
+	data = sampleData;
+}
 
 // filling in blank spaces with empty strings
 for (var i = 0; i < data.length; i++) {
