@@ -19,7 +19,11 @@ var sampleData = [
 
 /* START: ADDING NEW COLUMNS BASED ON THE ORIGINAL COLUMNS */
 var data = familyData ? familyData : sampleData;
-// data = sampleData;
+
+var utmParams = new URLSearchParams(window.location.search);
+if (utmParams.has('test')) {
+	data = sampleData;
+}
 
 // filling in blank spaces with empty strings
 for (var i = 0; i < data.length; i++) {
@@ -208,7 +212,7 @@ for (var i = 1; i < data.length; i++) {
 		}
 	} else {
 		element = document.createElement('table');
-		if (!data[i][mKeyIndex] != '') {
+		if (data[i][mKeyIndex] != '') {
 			element.id = data[i][mKeyIndex];
 		}
 		element.setAttribute('gen', data[i][genIndex]);
@@ -250,17 +254,16 @@ for (var i = 1; i < data.length; i++) {
 		// and updating the gen element's text based on it
 		gen.addEventListener('click', (event) => {
 			event.srcElement.parentNode.parentNode.parentNode.parentNode.parentNode.classList.toggle('collapse');
-			event.srcElement.classList.toggle('collapse');
-			event.srcElement.innerText = event.srcElement.classList.contains('collapse') ? '+' : event.srcElement.getAttribute('gen');
+			event.srcElement.innerText = event.srcElement.parentNode.parentNode.parentNode.parentNode.parentNode.classList.contains('collapse') ? '+' : event.srcElement.getAttribute('gen');
 		});
 		
 		// changes gen element's text to '-' when hovered without the collapse class
 		gen.addEventListener('mouseover', (event) => {
-			event.srcElement.innerText = event.srcElement.classList.contains('collapse') ? event.srcElement.getAttribute('gen') : '-';
+			event.srcElement.innerText = event.srcElement.parentNode.parentNode.parentNode.parentNode.parentNode.classList.contains('collapse') ? event.srcElement.getAttribute('gen') : '-';
 		});
 		
 		gen.addEventListener('mouseout', (event) => {
-			event.srcElement.innerText = event.srcElement.classList.contains('collapse') ? '+' : event.srcElement.getAttribute('gen');
+			event.srcElement.innerText = event.srcElement.parentNode.parentNode.parentNode.parentNode.parentNode.classList.contains('collapse') ? '+' : event.srcElement.getAttribute('gen');
 		});
 	}
 	data[i][elementIndex] = element;
@@ -290,6 +293,9 @@ for (var i = 1; i < data.length; i++) {
 				newEntry.append(data[i][elementIndex]);
 				newRow.append(newEntry);
 				data[j][elementIndex].append(newRow);
+				
+				// marking parts of the tree that are expandable
+				data[j][elementIndex].classList.add('expandable');
 			}
 		}
 	}
@@ -516,14 +522,14 @@ expandCollapseButton.classList.add('button');
 // code to collapse whole family tree
 expandCollapseButton.addEventListener('click', (event) => {
 	if (event.srcElement.innerText == '-') {
-		document.querySelectorAll('table[gen], td[gen]').forEach((el) => el.classList.add('collapse'));
+		document.querySelectorAll('table[gen].expandable').forEach((el) => el.classList.add('collapse'));
 		event.srcElement.innerText = '+';
 	} else {
-		document.querySelectorAll('table[gen], td[gen]').forEach((el) => el.classList.remove('collapse'));
+		document.querySelectorAll('table[gen].expandable').forEach((el) => el.classList.remove('collapse'));
 		event.srcElement.innerText = '-';
 	}
 	
-	document.querySelectorAll('td[gen]').forEach((el) => el.innerText = el.classList.contains('collapse') ? '+' : el.getAttribute('gen'));
+	document.querySelectorAll('td[gen]').forEach((el) => el.innerText = el.parentNode.parentNode.parentNode.parentNode.parentNode.classList.contains('collapse') ? '+' : el.getAttribute('gen'));
 });
 
 menuOptions.append(expandCollapseButton);
@@ -664,12 +670,17 @@ table {
 	max-width: 400px;
 }
 
-table.collapse > tr {
+table.expandable.collapse > tr {
 	display: none;
 }
 
-table.collapse > tr:nth-of-type(1) {
+table.expandable.collapse > tr:nth-of-type(1) {
 	display: block;
+}
+
+table.expandable.collapse > tr:nth-of-type(1) > td td:nth-of-type(1) {
+	font-weight: bold;
+	border: 1px solid black;
 }
 
 table[gen='2'] > tr:nth-of-type(1) {
@@ -696,11 +707,6 @@ table table {
 td {
 	text-align: center;	
 	padding: 0px;
-}
-
-td.collapse {
-	font-weight: bold;
-	border: 1px solid black;
 }
 
 td.name:hover, td.name:active {
