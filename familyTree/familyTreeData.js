@@ -65,7 +65,7 @@ var familyData = [
 ['Todd','','Nelson','Camille','','todd0','','todd0-1.jpg'],
 ['Kyle','','Nelson','Camille','','kyle0','','kyle0-1.jpg'],
 ['Erin','','Edward','Cynthia','','erin0','','erin0-1.jpg'],
-['Charles','','Edward','Cynthia','','charles0','','charles0-1.jpg'],
+['Charles','','Edward','Cynthia','','charles0','','charles0-1.jpg|charles0-2.jpg'],
 ['Shawn','','Edward','Cynthia','','shawn0','','shawn0-1.jpg'],
 ['Ethan','','Harold','Ellen','','ethan1','',''],
 ['Enzoe','','Harold','Ellen','','enzoe0','',''],
