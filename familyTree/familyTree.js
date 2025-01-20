@@ -364,7 +364,7 @@ function createImageCarousel (person, limit = 2) {
 	let picDiv = document.createElement('div');
 	picDiv.classList.add('imgGroup')
 	
-	let picPaths = person[imgsIndex].split('|').map((filename) => person[personKeyIndex] + '\\' + filename);
+	let picPaths = person[imgsIndex].split('|').map((filename) => 'imgs\\' + person[personKeyIndex] + '\\' + filename);
 	
 	if (typeof limit == 'number' && limit > 0) {
 		picPaths = picPaths.slice(0, limit);
@@ -413,9 +413,9 @@ function updateProfile (personKey) {
 	let imgFiles
 	
 	if (person[imgsIndex] == '') {
-		imgFiles = ['600x600.png', '640x360.png', '400x600.png'].map((filename) => 'fillerImg\\' + filename);
+		imgFiles = ['600x600.png', '640x360.png', '400x600.png'].map((filename) => 'imgs\\fillerImg\\' + filename);
 	} else {
-		imgFiles = person[imgsIndex].split('|').map((filename) => person[personKeyIndex] + '\\' + filename);
+		imgFiles = person[imgsIndex].split('|').map((filename) => 'imgs\\' + person[personKeyIndex] + '\\' + filename);
 	}
 	
 	for (var i = 0; i < imgFiles.length; i++) {
