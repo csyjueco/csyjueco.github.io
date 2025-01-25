@@ -43,7 +43,7 @@ var imgsIndex = data[0].indexOf('imgs');
 var personKeyIndex = data[0].indexOf('personKey');
 var skipIndex = data[0].indexOf('skip');
 
-data = data.filter((person) => person[skipIndex] == 'TRUE');
+data = data.filter((person) => person[skipIndex] != 'TRUE');
 
 // creating a unique key to use as an id for each person that doesn't have one
 // TODO: create export function for data columns
