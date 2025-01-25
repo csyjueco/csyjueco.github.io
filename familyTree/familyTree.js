@@ -375,7 +375,7 @@ function createImageCarousel (person, limit = 2) {
 	
 	for (var i = 0; i < picPaths.length; i++) {
 		let picImg = document.createElement('img');
-		picImg.src = picPaths[i];
+		picImg.src = picPaths[picPaths.length - i - 1]; // start with most recent photo
 		picImg.setAttribute('next', ((i + 1) % picPaths.length));
 		
 		if (picPaths[i].includes('-long')) {
@@ -423,7 +423,7 @@ function updateProfile (personKey) {
 	
 	for (var i = 0; i < imgFiles.length; i++) {
 		let picDiv = document.createElement('img');
-		picDiv.src = imgFiles[i];
+		picDiv.src = imgFiles[imgFiles.length - i - 1]; // start with most recent photo
 		
 		document.querySelectorAll('#profilePic')[0].append(picDiv);
 	}
