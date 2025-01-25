@@ -1,5 +1,5 @@
 var familyData = [
-['name','nickname','p1','p2','mTo','personKey','funFacts','imgs'],
+['name','nickname','p1','p2','mTo','personKey','funFacts','imgs','skip'],
 ['Guioc','','','','Ku','guioc0','',''],
 ['Ku','','','','Guioc','ku0','',''],
 ['Enrique','Iking','Ku','Guioc','Angelina','enrique0','',''],
