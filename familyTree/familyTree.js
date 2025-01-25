@@ -1,18 +1,18 @@
 var sampleData = [
-	['name', 'p1', 'p2', 'mTo','funFacts','imgs', 'personKey', 'nickname'],
-	['white', , , 'black', 'fun fact 1|fun fact 2|3 fact fun', , ],
-	['black', , , 'white', , , ],
-	['Duc', , , 'Du ck', , 'duckImg1.jpg|duckImg2.jpg|duckImg3.jpg|duckImg4-long.jpg', 'Dock'],
-	['Du ck', , , 'Duc', , , ],
-	['yel-low', , , 'blue', , , ],
-	['red', 'black', 'white', 'brown', , , ],
-	['green', 'white', 'black', , , ],
-	['blue', 'black', 'white', 'yel-low', , , ],
-	['brown', , , 'red', , , ],
+	['name', 'p1', 'p2', 'mTo','funFacts','imgs', 'personKey', 'nickname', 'skip'],
+	['white', , , 'black', 'fun fact 1|fun fact 2|3 fact fun', , , ],
+	['black', , , 'white', , , , ],
+	['Duc', , , 'Du ck', , 'duckImg1.jpg|duckImg2.jpg|duckImg3.jpg|duckImg4-long.jpg', 'Dock', ],
+	['Du ck', , , 'Duc', , , , ],
+	['yel-low', , , 'blue', , , , ],
+	['red', 'black', 'white', 'brown', , , , ],
+	['green', 'white', 'black', , , , ],
+	['blue', 'black', 'white', 'yel-low', , , , ],
+	['brown', , , 'red', , , , ],
 	['oak', 'brown', 'red', ,'tree hugger' , , ],
-	['light ning', 'yel-low', 'blue', '', 'milk before cereal|man fish > fish man!!', , ],
-	['birch', 'red', 'brown', , , , ],
-	['gus', 'Du ck', 'Duc', , , 'duckImg1.jpg|duckImg2.jpg|duckImg3.jpg|duckImg4-long.jpg', ]
+	['light ning', 'yel-low', 'blue', '', 'milk before cereal|man fish > fish man!!', , , ],
+	['birch', 'red', 'brown', , , , , ],
+	['gus', 'Du ck', 'Duc', , , 'duckImg1.jpg|duckImg2.jpg|duckImg3.jpg|duckImg4-long.jpg', , ]
 ];
 
 
@@ -41,6 +41,9 @@ var mToIndex = data[0].indexOf('mTo');
 var funFactsIndex = data[0].indexOf('funFacts');
 var imgsIndex = data[0].indexOf('imgs');
 var personKeyIndex = data[0].indexOf('personKey');
+var skipIndex = data[0].indexOf('skip');
+
+data = data.filter((person) => person[skipIndex] == TRUE);
 
 // creating a unique key to use as an id for each person that doesn't have one
 // TODO: create export function for data columns
