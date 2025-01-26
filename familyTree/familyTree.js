@@ -398,6 +398,25 @@ function createImageCarousel (person, limit = 2) {
 	return picDiv;
 }
 
+function addRelatedPeople (personArray, parentNode, introText) {
+	if (personArray.length == 0) {
+		return
+	}
+	
+	let newEntry = document.createElement('div');
+	newEntry.innerText = introText;
+	
+	for (var i = 0; i < personArray.length; i++) {
+		newEntry.append(createName(personArray[i]));
+		
+		if (personArray[i][imgsIndex] != '') {
+			newEntry.append(createImageCarousel(personArray[i]));
+		}
+	}
+	
+	parentNode.append(newEntry);
+}
+
 function updateProfile (personKey) {
 	// scroll to the top of the page whenever the profile is updated
 	window.scrollTo(0, 0);
@@ -441,73 +460,16 @@ function updateProfile (personKey) {
 	}
 	
 	if (person[classListIndex].includes('m')) {
-		// creating entry in #profileInfo for partner
-		let partnerEntry = document.createElement('div');
-		partnerEntry.innerText = 'Married to: ';
+		addRelatedPeople(data.filter((currPerson) => person[mKeyIndex] == currPerson[mKeyIndex] && person[nameIndex] != currPerson[nameIndex]), document.querySelectorAll('#profileInfo')[0], 'Married to: ');
 		
-		let partner;
-		
-		for (var i = 1; i < data.length; i++) {
-			if (person[mKeyIndex] == data[i][mKeyIndex] && person[nameIndex] != data[i][nameIndex]) {
-				partner = data[i];
-			}
-		}
-		
-		partnerEntry.append(createName(partner));
-		
-		if (partner[imgsIndex] != '') {
-			partnerEntry.append(createImageCarousel(partner));
-		}
-		
-		
-		document.querySelectorAll('#profileInfo')[0].append(partnerEntry);
-		
-		// creating entry in #profileInfo if person has children
-		let childrenEntry = document.createElement('div');
-		childrenEntry.innerText = 'Children: ';
-		
-		for (var i = 1; i < data.length; i++) {
-			if (person[mKeyIndex] == data[i][parentKeyIndex]) {
-				childrenEntry.append(createName(data[i]));
-				
-				if (data[i][imgsIndex] != '') {
-					childrenEntry.append(createImageCarousel(data[i]));
-				}
-			}
-		}
-		
-		if (childrenEntry.childElementCount > 0) {
-			document.querySelectorAll('#profileInfo')[0].append(childrenEntry);
-		}
+		addRelatedPeople(data.filter((currPerson) => person[mKeyIndex] == currPerson[parentKeyIndex]), document.querySelectorAll('#profileInfo')[0], 'Children: ');
 	}
 	
 	// creating entry in #profileInfo if person has parents in the family tree
 	if (person[classListIndex].includes('c')) {
-		let parentEntry = document.createElement('div');
-		parentEntry.innerText = 'Parents: ';
+		addRelatedPeople(data.filter((currPerson) => person[parentKeyIndex] == currPerson[mKeyIndex]), document.querySelectorAll('#profileInfo')[0], 'Parents: ');
 		
-		let siblingsEntry = document.createElement('div');
-		siblingsEntry.innerText = 'Siblings: ';
-		
-		for (var i = 1; i < data.length; i++) {
-			if (person[parentKeyIndex] == data[i][mKeyIndex]) {
-				parentEntry.append(createName(data[i]));
-				
-				if (data[i][imgsIndex] != '') {
-					parentEntry.append(createImageCarousel(data[i]));
-				}
-			} else if (person[parentKeyIndex] == data[i][parentKeyIndex] && person[nameIndex] != data[i][nameIndex]) {
-				// requirement for the person to to be a child ('c' in classList) excludes people marrying into the family (blank parentKeys)
-				siblingsEntry.append(createName(data[i]));
-				
-				if (data[i][imgsIndex] != '') {
-					siblingsEntry.append(createImageCarousel(data[i]));
-				}
-			}
-		}
-		
-		document.querySelectorAll('#profileInfo')[0].append(parentEntry);
-		document.querySelectorAll('#profileInfo')[0].append(siblingsEntry);
+		addRelatedPeople(data.filter((currPerson) => person[parentKeyIndex] == currPerson[parentKeyIndex] && person[nameIndex] != currPerson[nameIndex]), document.querySelectorAll('#profileInfo')[0], 'Siblings: ');
 	}
 }
 /* END: CREATING INITIAL PROFILE SCREEN */
